@@ -1,0 +1,141 @@
+
+#
+#Source definition
+#
+# =============================
+# SPENVIS particle source
+# Project: HIRAX
+# title: HIRAX Rad Analysis
+# Particle: solar proton
+# =============================
+
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/point   4.000000E+00   9.627976E-07
+/gps/hist/point   4.400000E+00   1.157803E-06
+/gps/hist/point   4.800000E+00   1.367975E-06
+/gps/hist/point   5.600000E+00   1.831171E-06
+/gps/hist/point   6.400000E+00   2.347775E-06
+/gps/hist/point   7.200000E+00   2.913639E-06
+/gps/hist/point   8.000000E+00   3.524867E-06
+/gps/hist/point   8.800000E+00   4.178067E-06
+/gps/hist/point   1.000000E+01   5.229872E-06
+/gps/hist/point   1.120000E+01   6.359966E-06
+/gps/hist/point   1.280000E+01   7.974870E-06
+/gps/hist/point   1.400000E+01   9.258022E-06
+/gps/hist/point   1.600000E+01   1.151620E-05
+/gps/hist/point   1.800000E+01   1.390343E-05
+/gps/hist/point   2.000000E+01   1.640037E-05
+/gps/hist/point   2.200000E+01   1.899030E-05
+/gps/hist/point   2.520000E+01   2.329177E-05
+/gps/hist/point   2.840000E+01   2.774780E-05
+/gps/hist/point   3.200000E+01   3.289876E-05
+/gps/hist/point   3.600000E+01   3.874463E-05
+/gps/hist/point   4.000000E+01   4.467596E-05
+/gps/hist/point   4.400000E+01   5.065881E-05
+/gps/hist/point   4.800000E+01   5.666176E-05
+/gps/hist/point   5.600000E+01   6.864882E-05
+/gps/hist/point   6.400000E+01   8.050645E-05
+/gps/hist/point   7.200000E+01   9.214794E-05
+/gps/hist/point   8.000000E+01   1.035155E-04
+/gps/hist/point   8.800000E+01   1.145739E-04
+/gps/hist/point   1.000000E+02   1.305269E-04
+/gps/hist/point   1.120000E+02   1.456945E-04
+/gps/hist/point   1.280000E+02   1.646697E-04
+/gps/hist/point   1.400000E+02   1.779649E-04
+/gps/hist/point   1.600000E+02   1.984481E-04
+/gps/hist/point   1.800000E+02   2.169081E-04
+/gps/hist/point   2.000000E+02   2.335083E-04
+/gps/hist/point   2.200000E+02   2.483994E-04
+/gps/hist/point   2.520000E+02   2.690083E-04
+/gps/hist/point   2.840000E+02   2.861614E-04
+/gps/hist/point   3.200000E+02   3.019196E-04
+/gps/hist/point   3.600000E+02   3.157678E-04
+/gps/hist/point   4.000000E+02   3.263989E-04
+/gps/hist/point   4.400000E+02   3.344037E-04
+/gps/hist/point   4.800000E+02   3.402470E-04
+/gps/hist/point   5.600000E+02   3.469324E-04
+/gps/hist/point   6.400000E+02   3.487545E-04
+/gps/hist/point   7.200000E+02   3.473093E-04
+/gps/hist/point   8.000000E+02   3.436525E-04
+/gps/hist/point   8.800000E+02   3.385003E-04
+/gps/hist/point   1.000000E+03   3.290253E-04
+/gps/hist/point   1.120000E+03   3.184193E-04
+/gps/hist/point   1.280000E+03   3.035407E-04
+/gps/hist/point   1.400000E+03   2.923063E-04
+/gps/hist/point   1.600000E+03   2.740097E-04
+/gps/hist/point   1.800000E+03   2.565801E-04
+/gps/hist/point   2.000000E+03   2.402187E-04
+/gps/hist/point   2.200000E+03   2.249506E-04
+/gps/hist/point   2.520000E+03   2.027584E-04
+/gps/hist/point   2.840000E+03   1.831171E-04
+/gps/hist/point   3.200000E+03   1.637398E-04
+/gps/hist/point   3.600000E+03   1.451290E-04
+/gps/hist/point   4.000000E+03   1.291446E-04
+/gps/hist/point   4.400000E+03   1.153756E-04
+/gps/hist/point   4.800000E+03   1.034652E-04
+/gps/hist/point   5.600000E+03   8.411426E-05
+/gps/hist/point   6.400000E+03   6.930228E-05
+/gps/hist/point   7.200000E+03   5.779022E-05
+/gps/hist/point   8.000000E+03   4.871228E-05
+/gps/hist/point   8.800000E+03   4.146023E-05
+/gps/hist/point   1.000000E+04   3.308223E-05
+/gps/hist/point   1.120000E+04   2.684428E-05
+/gps/hist/point   1.280000E+04   2.077472E-05
+/gps/hist/point   1.400000E+04   1.738934E-05
+/gps/hist/point   1.600000E+04   1.323239E-05
+/gps/hist/point   1.800000E+04   1.031825E-05
+/gps/hist/point   2.000000E+04   8.212626E-06
+/gps/hist/point   2.200000E+04   6.651254E-06
+/gps/hist/point   2.520000E+04   4.892214E-06
+/gps/hist/point   2.840000E+04   3.710472E-06
+/gps/hist/point   3.200000E+04   2.800793E-06
+/gps/hist/point   3.600000E+04   2.112030E-06
+/gps/hist/point   4.000000E+04   1.634885E-06
+/gps/hist/point   4.400000E+04   1.293205E-06
+/gps/hist/point   4.800000E+04   1.041890E-06
+/gps/hist/point   5.600000E+04   7.072730E-07
+/gps/hist/point   6.400000E+04   5.035345E-07
+/gps/hist/point   7.200000E+04   3.720525E-07
+/gps/hist/point   8.000000E+04   2.832334E-07
+/gps/hist/point   1.200000E+05   9.763316E-08
+/gps/hist/point   1.600000E+05   4.532564E-08
+/gps/hist/point   2.000000E+05   2.486885E-08
+/gps/hist/point   2.400000E+05   1.518897E-08
+/gps/hist/point   2.800000E+05   9.996045E-09
+/gps/hist/point   3.200000E+05   6.950208E-09
+/gps/hist/point   3.600000E+05   5.040748E-09
+/gps/hist/point   4.000000E+05   3.780090E-09
+#/gps/hist/inter  Lin
+#/gps/ang/type cos
+#/gps/ang/mintheta    0.000E+00 deg
+#/gps/ang/maxtheta    9.000E+01 deg
+#/gps/source/list 
+
+#
+#Normalisation
+#
+/control/alias  NORM_FACTOR_SPECTRUM "   1.275845E+08 "
+#/control/alias  NORM_FACTOR_ANGULAR "   2.500000E-01 "
+
+
+#
+#/gras/analysis/adjoint/addUserDefinedPrimSpectrum proton {NORM_FACTOR_SPECTRUM} 1/cm2 Arb
+
+/gras/analysis/adjoint/addUserDefinedPrimSpectrum GenericIon {NORM_FACTOR_SPECTRUM} 1/cm2 Arb
+#
+#Definition of the adjoint source
+##################################
+#
+
+#/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume          {target_mirror_1}
+#/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume          {target_detector}
+#/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume          {target_mirror_4}
+/adjoint/SetAdjSourceEmin 1.0000e-05 MeV
+/adjoint/SetAdjSourceEmax 4.0000e+05 MeV
+
+#Definition of the external source
+###################################
+#/adjoint/DefineSphericalExtSource 0 0 0 75 cm            #<X Y Z R length_unit>
+/adjoint/SetExtSourceEmax  4.0000e+05 MeV
+

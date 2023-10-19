@@ -1,0 +1,66 @@
+
+#
+#Source definition
+#
+# =============================
+# SPENVIS particle source
+# Project: LENS
+# title: LENS_RAD
+# Particle: e-
+# Mission Avg Spectrum: duration=  1825.0 Days
+# =============================
+/gps/particle  e-
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/point   4.000000E-02   4.456800E+04
+/gps/hist/point   1.000000E-01   3.163300E+04
+/gps/hist/point   2.000000E-01   1.507300E+04
+/gps/hist/point   3.000000E-01   6.779900E+03
+/gps/hist/point   4.000000E-01   3.242900E+03
+/gps/hist/point   5.000000E-01   1.631700E+03
+/gps/hist/point   6.000000E-01   8.527900E+02
+/gps/hist/point   7.000000E-01   5.277200E+02
+/gps/hist/point   8.000000E-01   3.380100E+02
+/gps/hist/point   1.000000E+00   1.788900E+02
+/gps/hist/point   1.250000E+00   9.811600E+01
+/gps/hist/point   1.500000E+00   5.903000E+01
+/gps/hist/point   1.750000E+00   3.613600E+01
+/gps/hist/point   2.000000E+00   2.261700E+01
+/gps/hist/point   2.250000E+00   1.419200E+01
+/gps/hist/point   2.500000E+00   9.364700E+00
+/gps/hist/point   2.750000E+00   6.208400E+00
+/gps/hist/point   3.000000E+00   3.830300E+00
+/gps/hist/point   3.250000E+00   2.381300E+00
+/gps/hist/point   3.500000E+00   1.503800E+00
+/gps/hist/point   3.750000E+00   9.509200E-01
+/gps/hist/point   4.000000E+00   5.540000E-01
+/gps/hist/point   4.250000E+00   3.238300E-01
+/gps/hist/point   4.500000E+00   1.779800E-01
+/gps/hist/point   4.750000E+00   9.687700E-02
+/gps/hist/point   5.000000E+00   4.905800E-02
+/gps/hist/point   5.500000E+00   1.530800E-02
+/gps/hist/point   6.000000E+00   3.471200E-03
+/gps/hist/point   6.500000E+00   7.433300E-04
+/gps/hist/point   7.000000E+00   0.000000E+00
+/gps/hist/inter  Lin
+/gps/ang/type cos
+/gps/ang/mintheta    0.000E+00 deg
+/gps/ang/maxtheta    9.000E+01 deg
+/gps/source/list 
+
+#
+#Normalisation
+#
+/control/alias  NORM_FACTOR_SPECTRUM "   9.907507E+11 "
+/control/alias  NORM_FACTOR_ANGULAR "   2.500000E-01 "
+
+
+
+############### Definition of FMC source location ######################
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/radius {source_radius} mm
+################ GRAS normalisation using SPENVIS ###########################
+/gras/analysis/setNormalisationType FLUENCE
+/gras/analysis/setSourceFluence {NORM_FACTOR_SPECTRUM} cm-2
+

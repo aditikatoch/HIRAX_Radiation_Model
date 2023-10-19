@@ -1,0 +1,129 @@
+
+#
+#
+#Source definition
+#
+# =============================
+# SPENVIS particle source
+# Project: HIRAX
+# title: HIRAX Rad Analysis
+# Particle: GCR ion
+# Mission Avg Spectrum: duration=  3650.0 Days
+# =============================
+/gps/particle  proton
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/point   1.000000E+00   2.530993E-01
+/gps/hist/point   1.100000E+00   2.937263E-01
+/gps/hist/point   1.200000E+00   2.340989E-01
+/gps/hist/point   1.400000E+00   1.521913E-01
+/gps/hist/point   1.600000E+00   1.029374E-01
+/gps/hist/point   1.800000E+00   7.197766E-02
+/gps/hist/point   2.000000E+00   5.174329E-02
+/gps/hist/point   2.200000E+00   3.815024E-02
+/gps/hist/point   2.500000E+00   2.510761E-02
+/gps/hist/point   2.800000E+00   1.721467E-02
+/gps/hist/point   3.200000E+00   1.098075E-02
+/gps/hist/point   3.500000E+00   8.119760E-03
+/gps/hist/point   4.000000E+00   5.199964E-03
+/gps/hist/point   4.500000E+00   3.537559E-03
+/gps/hist/point   5.000000E+00   2.535140E-03
+/gps/hist/point   5.500000E+00   1.899407E-03
+/gps/hist/point   6.300000E+00   1.294462E-03
+/gps/hist/point   7.100000E+00   9.558484E-04
+/gps/hist/point   8.000000E+00   7.341776E-04
+/gps/hist/point   9.000000E+00   5.916498E-04
+/gps/hist/point   1.000000E+01   5.067137E-04
+/gps/hist/point   1.100000E+01   4.550660E-04
+/gps/hist/point   1.200000E+01   4.237506E-04
+/gps/hist/point   1.400000E+01   3.964941E-04
+/gps/hist/point   1.600000E+01   3.956773E-04
+/gps/hist/point   1.800000E+01   4.095380E-04
+/gps/hist/point   2.000000E+01   4.354750E-04
+/gps/hist/point   2.200000E+01   4.649557E-04
+/gps/hist/point   2.500000E+01   5.171941E-04
+/gps/hist/point   2.800000E+01   5.758539E-04
+/gps/hist/point   3.200000E+01   6.598978E-04
+/gps/hist/point   3.500000E+01   7.252429E-04
+/gps/hist/point   4.000000E+01   8.354123E-04
+/gps/hist/point   4.500000E+01   9.443376E-04
+/gps/hist/point   5.000000E+01   1.053728E-03
+/gps/hist/point   5.500000E+01   1.155465E-03
+/gps/hist/point   6.300000E+01   1.307908E-03
+/gps/hist/point   7.100000E+01   1.447018E-03
+/gps/hist/point   8.000000E+01   1.588138E-03
+/gps/hist/point   9.000000E+01   1.726871E-03
+/gps/hist/point   1.000000E+02   1.848764E-03
+/gps/hist/point   1.100000E+02   1.955956E-03
+/gps/hist/point   1.200000E+02   2.050455E-03
+/gps/hist/point   1.400000E+02   2.209796E-03
+/gps/hist/point   1.600000E+02   2.333952E-03
+/gps/hist/point   1.800000E+02   2.431341E-03
+/gps/hist/point   2.000000E+02   2.506363E-03
+/gps/hist/point   2.200000E+02   2.561780E-03
+/gps/hist/point   2.500000E+02   2.613679E-03
+/gps/hist/point   2.800000E+02   2.635042E-03
+/gps/hist/point   3.200000E+02   2.627377E-03
+/gps/hist/point   3.500000E+02   2.602370E-03
+/gps/hist/point   4.000000E+02   2.536522E-03
+/gps/hist/point   4.500000E+02   2.452201E-03
+/gps/hist/point   5.000000E+02   2.358331E-03
+/gps/hist/point   5.500000E+02   2.260564E-03
+/gps/hist/point   6.300000E+02   2.104239E-03
+/gps/hist/point   7.100000E+02   1.954071E-03
+/gps/hist/point   8.000000E+02   1.796488E-03
+/gps/hist/point   9.000000E+02   1.636895E-03
+/gps/hist/point   1.000000E+03   1.493387E-03
+/gps/hist/point   1.100000E+03   1.364959E-03
+/gps/hist/point   1.200000E+03   1.250040E-03
+/gps/hist/point   1.400000E+03   1.054934E-03
+/gps/hist/point   1.600000E+03   8.976787E-04
+/gps/hist/point   1.800000E+03   7.697153E-04
+/gps/hist/point   2.000000E+03   6.648113E-04
+/gps/hist/point   2.200000E+03   5.781284E-04
+/gps/hist/point   2.500000E+03   4.742674E-04
+/gps/hist/point   2.800000E+03   3.939557E-04
+/gps/hist/point   3.200000E+03   3.130157E-04
+/gps/hist/point   3.500000E+03   2.664196E-04
+/gps/hist/point   4.000000E+03   2.075587E-04
+/gps/hist/point   4.500000E+03   1.650341E-04
+/gps/hist/point   5.000000E+03   1.335177E-04
+/gps/hist/point   5.500000E+03   1.096202E-04
+/gps/hist/point   6.300000E+03   8.214762E-05
+/gps/hist/point   7.100000E+03   6.326413E-05
+/gps/hist/point   8.000000E+03   4.842953E-05
+/gps/hist/point   9.000000E+03   3.700419E-05
+/gps/hist/point   1.000000E+04   2.895292E-05
+/gps/hist/point   1.100000E+04   2.311332E-05
+/gps/hist/point   1.200000E+04   1.877164E-05
+/gps/hist/point   1.400000E+04   1.291069E-05
+/gps/hist/point   1.600000E+04   9.285040E-06
+/gps/hist/point   1.800000E+04   6.918792E-06
+/gps/hist/point   2.000000E+04   5.304391E-06
+/gps/hist/point   3.000000E+04   1.870504E-06
+/gps/hist/point   4.000000E+04   8.802994E-07
+/gps/hist/point   5.000000E+04   4.874495E-07
+/gps/hist/point   6.000000E+04   2.997331E-07
+/gps/hist/point   7.000000E+04   1.983476E-07
+/gps/hist/point   8.000000E+04   1.385191E-07
+/gps/hist/point   9.000000E+04   1.008451E-07
+/gps/hist/point   1.000000E+05   7.585564E-08
+/gps/hist/inter  Lin
+/gps/ang/type cos
+/gps/ang/mintheta    0.000E+00 deg
+/gps/ang/maxtheta    9.000E+01 deg
+/gps/source/list 
+
+#
+#Normalisation
+#
+/control/alias  NORM_FACTOR_SPECTRUM "   1.477696E+09 "
+/control/alias  NORM_FACTOR_ANGULAR "   2.500000E-01 "
+
+############### Definition of FMC source location ######################
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/radius {source_radius} m
+################ GRAS normalisation using SPENVIS ###########################
+/gras/analysis/setNormalisationType FLUENCE
+/gras/analysis/setSourceFluence {NORM_FACTOR_SPECTRUM} cm-2

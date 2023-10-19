@@ -1,0 +1,118 @@
+
+#
+#Source definition
+#
+# =============================
+# SPENVIS particle source
+# Project: HIRAX
+# title: HIRAX Rad Analysis
+# Particle: solar proton
+# =============================
+#/gps/particle  proton
+#/gps/ion 2 4
+/gps/ene/type Arb
+
+/gps/hist/type arb
+/gps/hist/point   1.000000E-01   3.457700E+13
+/gps/hist/point   1.100000E-01   2.989500E+13
+/gps/hist/point   1.200000E-01   2.582900E+13
+/gps/hist/point   1.400000E-01   1.992600E+13
+/gps/hist/point   1.600000E-01   1.577300E+13
+/gps/hist/point   1.800000E-01   1.284400E+13
+/gps/hist/point   2.000000E-01   1.069300E+13
+/gps/hist/point   2.200000E-01   9.088100E+12
+/gps/hist/point   2.500000E-01   7.306900E+12
+/gps/hist/point   2.800000E-01   6.013500E+12
+/gps/hist/point   3.200000E-01   4.767800E+12
+/gps/hist/point   3.500000E-01   4.084600E+12
+/gps/hist/point   4.000000E-01   3.255900E+12
+/gps/hist/point   4.500000E-01   2.651300E+12
+/gps/hist/point   5.000000E-01   2.207300E+12
+/gps/hist/point   5.500000E-01   1.877000E+12
+/gps/hist/point   6.300000E-01   1.489800E+12
+/gps/hist/point   7.100000E-01   1.210700E+12
+/gps/hist/point   8.000000E-01   9.856200E+11
+/gps/hist/point   9.000000E-01   8.037000E+11
+/gps/hist/point   1.000000E+00   6.691100E+11
+/gps/hist/point   1.100000E+00   5.670600E+11
+/gps/hist/point   1.200000E+00   4.899400E+11
+/gps/hist/point   1.400000E+00   3.779700E+11
+/gps/hist/point   1.600000E+00   2.991900E+11
+/gps/hist/point   1.800000E+00   2.436300E+11
+/gps/hist/point   2.000000E+00   2.028300E+11
+/gps/hist/point   2.200000E+00   1.723900E+11
+/gps/hist/point   2.500000E+00   1.386000E+11
+/gps/hist/point   2.800000E+00   1.170100E+11
+/gps/hist/point   3.200000E+00   9.981100E+10
+/gps/hist/point   3.500000E+00   8.764500E+10
+/gps/hist/point   4.000000E+00   6.888900E+10
+/gps/hist/point   4.500000E+00   5.537600E+10
+/gps/hist/point   5.000000E+00   4.791300E+10
+/gps/hist/point   5.500000E+00   4.254100E+10
+/gps/hist/point   6.300000E+00   3.303000E+10
+/gps/hist/point   7.100000E+00   2.730500E+10
+/gps/hist/point   8.000000E+00   2.264300E+10
+/gps/hist/point   9.000000E+00   1.780400E+10
+/gps/hist/point   1.000000E+01   1.517400E+10
+/gps/hist/point   1.100000E+01   1.324500E+10
+/gps/hist/point   1.200000E+01   1.102600E+10
+/gps/hist/point   1.400000E+01   8.156500E+09
+/gps/hist/point   1.600000E+01   6.398900E+09
+/gps/hist/point   1.800000E+01   5.033400E+09
+/gps/hist/point   2.000000E+01   4.075900E+09
+/gps/hist/point   2.200000E+01   3.407800E+09
+/gps/hist/point   2.500000E+01   2.579200E+09
+/gps/hist/point   2.800000E+01   2.042200E+09
+/gps/hist/point   3.200000E+01   1.489000E+09
+/gps/hist/point   3.500000E+01   1.208100E+09
+/gps/hist/point   4.000000E+01   8.905500E+08
+/gps/hist/point   4.500000E+01   6.652100E+08
+/gps/hist/point   5.000000E+01   5.078000E+08
+/gps/hist/point   5.500000E+01   3.996700E+08
+/gps/hist/point   6.300000E+01   2.795300E+08
+/gps/hist/point   7.100000E+01   1.996700E+08
+/gps/hist/point   8.000000E+01   1.430000E+08
+/gps/hist/point   9.000000E+01   1.013300E+08
+/gps/hist/point   1.000000E+02   7.241400E+07
+/gps/hist/point   1.100000E+02   5.237900E+07
+/gps/hist/point   1.200000E+02   4.014800E+07
+/gps/hist/point   1.400000E+02   2.542600E+07
+/gps/hist/point   1.600000E+02   1.633400E+07
+/gps/hist/point   1.800000E+02   1.096900E+07
+/gps/hist/point   2.000000E+02   7.687800E+06
+/gps/hist/point   2.200000E+02   5.610900E+06
+/gps/hist/point   2.500000E+02   3.667200E+06
+/gps/hist/point   2.800000E+02   2.493100E+06
+/gps/hist/point   3.200000E+02   1.501700E+06
+/gps/hist/point   3.500000E+02   1.068600E+06
+/gps/hist/point   4.000000E+02   6.548000E+05
+/gps/hist/point   4.500000E+02   4.161000E+05
+/gps/hist/point   5.000000E+02   2.435200E+05
+
+#
+#Normalisation
+#
+/control/alias  NORM_FACTOR_SPECTRUM " 4.847651E+12"
+
+
+#
+/gras/analysis/adjoint/addUserDefinedPrimSpectrum proton {NORM_FACTOR_SPECTRUM} 1/cm2 Arb
+
+#/gras/analysis/adjoint/addUserDefinedPrimSpectrum He4[0.0] {NORM_FACTOR_SPECTRUM} 1/cm2 Arb
+
+#
+#Definition of the adjoint source
+##################################
+#
+
+#/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume          {target_mirror_1}
+#/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume          {target_detector}
+#/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume          {target_mirror_4}
+/adjoint/SetAdjSourceEmin 1.0000e-05 MeV
+/adjoint/SetAdjSourceEmax 5.0000e+02 MeV
+
+#Definition of the external source
+###################################
+#/adjoint/DefineSphericalExtSource 0 0 0 75 cm            #<X Y Z R length_unit>
+/adjoint/SetExtSourceEmax  5.0000e+02 MeV
+
