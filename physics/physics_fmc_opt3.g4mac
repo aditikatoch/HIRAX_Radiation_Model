@@ -1,0 +1,13 @@
+# List physics options
+/gras/physics/list
+#
+/gras/physics/addPhysics  em_standard_opt3
+#/gras/physics/addPhysics  secondary_generator
+#
+/gras/physics/addPhysics  QBBC
+#
+/run/initialize
+/gras/physics/setCuts    {cut} mm
+#
+/gras/physics/describe
+#

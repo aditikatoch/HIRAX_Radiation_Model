@@ -1,0 +1,31 @@
+# List physics options
+/gras/physics/list
+#
+#accurate model
+/gras/physics/addPhysics  em_standard_opt4
+/gras/physics/addPhysics  stopping
+/gras/physics/addPhysics  secondary_generator
+#
+############ hadronic physics (solar and trappped proton)
+/gras/physics/addPhysics  QBBC
+#
+############ hadronic physics (cosmic rays)
+#/gras/physics/addPhysics FTFP_BERT_HP
+/run/initialize
+########### set a production cut defined in range
+/gras/physics/setCuts    {cut} mm
+#/gras/physics/productionCutsEnergyRange 250 eV 100 GeV
+#
+/gras/physics/describe
+#
+
+#### 
+# locally absorbed electrons energy
+# secondary electron worse - absoption - chnge in material properties
+# delta electron & brem gamma (local generation) diversion depends on the stopping power & material (geant4 - if not generated or tracked - energy remain conserved (accounted for)
+# lower threshold of the local (secondary) sim - more number of sec. particle generted - slower processing
+
+# SEEs sensitive volume == track electron path
+# sec electron cuts (sensitive volume range): 1/10th of volume thickness
+## production vs tracking cut - geant4 only production cut - apply range calculation for energy and tracked till 0 energy 
+# 

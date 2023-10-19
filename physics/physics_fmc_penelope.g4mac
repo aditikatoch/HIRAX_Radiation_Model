@@ -1,0 +1,12 @@
+# List physics options
+/gras/physics/list
+#
+/gras/physics/addPhysics  em_penelope
+#
+#/gras/physics/addPhysics  QBBC
+#
+/run/initialize
+/gras/physics/setCuts    {cut} mm
+#
+/gras/physics/describe
+#
