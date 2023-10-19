@@ -1,0 +1,6 @@
+#######run command #######
+#/gras/event/printModulo  {printmodulo}
+
+# precision here is set as percent
+/gras/setAdjointSimPrecision {precision}
+/adjoint/start_run {nevents}

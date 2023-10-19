@@ -1,0 +1,250 @@
+########################################################
+#
+# modular_macro_detector.g4mac
+#
+########################################################
+# svn update
+# Question mark - updated files
+# svn update geometry_gdml.g4mac
+
+
+# control of amount of text feedback provided by Geant4/GRAS to terminal/log file
+
+/control/verbose 2
+/run/verbose 1
+
+#**************************************#
+############ Aliasis #####################
+# (text variables that are reused later in the main macro or in the sub-macros)
+#**************************************#
+
+
+/control/alias cut             	0.001 # [mm]
+
+
+
+#******************** SOURCE ********************#
+# Generation Surface should fully encompass the sat
+#/control/alias source_case     e_10Y
+#/control/alias source_case     hirax_p_10Y
+/control/alias source_case      sp_10Y
+ #/control/alias source_case		gcr_10Y
+#/control/alias source_case      alpha_10Y
+
+
+/control/alias mintheta     	0
+/control/alias maxtheta     	90
+
+#******************** GEOMETRY ********************#
+/control/alias geometry_case   	hirax
+#/control/alias geometry_case   	hirax_test
+
+#******************** TARGET ********************#
+/control/alias target_mirror_1     	Mirror_1_Coat #change data file
+/control/alias target_mirror_2     	Mirror_2
+/control/alias target_mirror_3     	Mirror_3_Coat
+/control/alias target_mirror_4     	Mirror_4_Coat
+
+#Detector_Upper_D1
+
+#Detector_Lower_D2
+#/control/alias target_detector     	Detector_Lower
+# Change polymide al layer to 160/40
+#/control/alias target_layer         Detector_Lower_Layer
+ /control/alias target_detector     	Detector
+ /control/alias target_layer         Detector_Layer
+
+#******************** MONTE CARLO ********************#
+#/control/alias monte_carlo fmc # forward monte-carlo
+/control/alias monte_carlo rmc  #change physics too
+
+
+#******************** PHYSICS ********************#
+#/control/alias em_physics_mode opt4
+/control/alias em_physics_mode rmc
+
+#**************************************#
+############ Calls #####################
+# in this case: model from external file in GDML format
+#******************** BEAM PARTICLES ********************#
+#RMC
+/control/alias precision       0.1 # %
+#/control/alias printmodulo     10000
+/control/alias nevents         100
+#/control/alias nevents         1000000
+#******************** GEOMETRY ********************#
+
+/gras/geometry/type gdml
+/gdml/file geometry/geometry_{geometry_case}.gdml #geometry_{geometry_case} is the fileName
+#/gras/geometry/util/setVolumeSD Detector_Log  {target_detector} true
+
+#******************** PHYSICS ********************#
+# in this case: pre-compiled physics list optimised for accurate EM modelling
+
+/control/execute physics/physics_{monte_carlo}_{em_physics_mode}.g4mac
+#/gras/physics/productionCutsLowestEnergy 100 eV
+
+#/run/particle/buildPhysicsTable proton
+#/run/particle/storePhysicsTable /home/a/ak906/Desktop/HIRAX/tmp
+#******************** INITIALISATION ********************#
+
+/run/initialize
+
+# colour assignment to elements of the geometry model
+/control/execute macros/colours.g4mac
+
+/gras/vis/util/setVolumeProperty colour blue              name Bus_Log
+/gras/vis/util/setVolumeProperty colour green              name Bus_Hollow_Log
+/gras/vis/util/setVolumeProperty colour light_grey         name MLI_Log
+/gras/vis/util/setVolumeProperty colour magenta            name Casing_Log
+/gras/vis/util/setVolumeProperty colour brown              name Truss_Log
+/gras/vis/util/setVolumeProperty colour yellow            name Solar_Panel_Log
+/gras/vis/util/setVolumeProperty colour red               name Detector_Log
+/gras/vis/util/setVolumeProperty colour blue              name Mirror_Log
+/gras/vis/util/setVolumeProperty colour yellow            name Detector_Shield_Polymide_Log
+/gras/vis/util/setVolumeProperty colour green            name Detector_Shield_Polymide_Metal_Log
+
+# printout to the log (terminal or file) of the lists of logical volumes and physical volumes
+/gras/geometry/util/verbose 1
+/gras/geometry/util/listLogicalVolumes
+/gras/geometry/util/listPhysicalVolumes
+
+# geometry overlap test
+# macro commands for Geant4 >= 10.1
+
+/geometry/test/verbosity true
+/geometry/test/recursion_start 0
+/geometry/test/recursion_depth -1
+/geometry/test/tolerance 0 mm
+/geometry/test/resolution 10000
+/geometry/test/maximum_errors 1
+/geometry/test/run
+
+#******************** SOURCE ********************#
+# particle species, energy, spatial and angular distribution
+#/control/execute folderName/fileName
+#/control/execute source/source_{source_case}_{monte_carlo}.g4mac #source_{source_case} is the fileName (different for every case)
+/control/execute source/source_{geometry_case}_{source_case}_{monte_carlo}.g4mac
+/adjoint/DefineAdjSourceOnExtSurfaceOfAVolume   {target_layer}
+
+#******************** ANALYSIS ********************#
+
+#/gras/analysis/autoSeed true
+
+# FOR USER DEFINED PRIMARY SPECTRA
+
+#  /gras/setAdjointPointDetectorMode false
+# #  /gras/setAdjointPointDetectorPosition 0 0 2049 mm
+# /gras/setAdjointPointDetectorAtTheCenterOfAVolume Detector_Layer
+# #
+# #/gras/PointDetector/initialise
+# /gras/histo/setHistoByName  PointDetector_fluence_proton     100 1E-06 1E+00 MeV log
+# /gras/histo/setHistoByName  PointDetector_fluence_e-     100 1E-06 1E+00 MeV log
+
+# ------------- Dose --------------------#
+# tally total ionising dose in the target volume
+#
+
+
+/gras/analysis/dose/addModule dose_Detector
+/gras/analysis/dose/dose_Detector/addVolume {target_detector}
+/gras/analysis/dose/dose_Detector/setUnit rad
+# initialise the histogram
+
+/gras/analysis/dose/dose_Detector/initialise
+/gras/histo/setHistoByName dose_Detector_dose                        100 1E-15 1E+05 none log
+/gras/histo/setHistoByName dose_Detector_total_dose_vs_primary_kine  100 1E-00 1E+05 none log
+
+
+
+#------------- Fluence --------------------#
+
+/gras/analysis/fluence/addModule fluence_Detector
+#/gras/analysis/fluence/fluence_Detector/addVolumeInterface Detector_Shield_Polymide {target_detector}
+#/gras/analysis/fluence/fluence_Detector/addVolumeInterface Detector_Lower_Shield_Polymide {target_detector}
+#/gras/analysis/fluence/fluence_Detector/addVolumeInterface * {target_detector}
+#/gras/analysis/fluence/fluence_Detector/addVolumeInterface Detector_Layer {target_detector}
+#/gras/analysis/fluence/fluence_Detector/addVolumeInterface Detector_Lower_Layer {target_detector}
+/gras/analysis/fluence/fluence_Detector/addVolumeInterface {target_layer} {target_detector}
+
+/gras/analysis/fluence/fluence_Detector/insertParticle proton
+/gras/analysis/fluence/fluence_Detector/insertParticle e-
+/gras/analysis/fluence/fluence_Detector/insertParticle gamma
+# /gras/analysis/fluence/fluence_Detector/insertParticle e+
+# /gras/analysis/fluence/fluence_Detector/insertParticle He4[0.0]
+# /gras/analysis/fluence/fluence_Detector/insertParticle primary
+
+
+/gras/analysis/fluence/fluence_Detector/autoInterfaceSurfaceArea true
+#/gras/analysis/fluence/fluence_Detector/setInterfaceSurfaceArea 2000 cm2
+#/gras/analysis/fluence/fluence_Detector/neglectPrimaries true
+# initialise the histogram
+/gras/analysis/fluence/fluence_Detector/initialise
+#/gras/histo/setHistoByName  fluence_Detector_fluence_proton     100 1E-06 1E+06 MeV log
+/gras/histo/setHistoByName  fluence_Detector_fluence_proton     100 1E-06 1E+02 MeV log
+# /gras/histo/setHistoByName  fluence_Detector_fluence_primary     100 1E-06 1E+05 MeV log
+# /gras/histo/setHistoByName  fluence_Detector_fluence_He4[0.0]     100 1E-06 1E+05 MeV log
+# /gras/histo/setHistoByName  fluence_Detector_fluence_e+     100 1E-06 1E+05 MeV log
+/gras/histo/setHistoByName  fluence_Detector_fluence_e-  		80 1E-04  1E+00 MeV log
+/gras/histo/setHistoByName  fluence_Detector_fluence_gamma		80 1E-00  1E+05 MeV log
+#
+# ------------- Detector analysis --------------------#
+# /gras/analysis/detector/addModule SiDet
+# /gras/analysis/detector/SiDet/addVolume {target_detector}
+# /gras/analysis/detector/SiDet/initialise
+#
+#
+# # ------------- Charging analysis--------------------#
+# /gras/analysis/charging/addModule chargingDetector
+# /gras/analysis/charging/chargingDetector/addVolumeInterface * {target_detector}
+#
+# /gras/analysis/charging/chargingDetector/initialise
+# /gras/histo/setHistoByName chargingDetector_charging        	100 1E-00 1E+01 none log
+#
+# # # ------------- LET analysis --------------------#
+# /gras/analysis/LET/addModule LET_Detector
+# /gras/analysis/LET/LET_Detector/addVolumeInterface * {target_detector}
+# /gras/analysis/LET/LET_Detector/setUnit MeV/cm
+#
+# /gras/analysis/LET/LET_Detector/initialise
+# /gras/histo/setHistoByName LET_Detector_histo        	100 1E-15 1E+03 none log
+# #
+# # # ------------- Path Length analysis --------------------#
+# /gras/analysis/pathLength/addModule pathLengthDetector
+# /gras/analysis/pathLength/pathLengthDetector/addVolume {target_detector}
+# /gras/analysis/pathLength/pathLengthDetector/addVolumeInterface * {target_detector}
+# /gras/analysis/pathLength/pathLengthDetector/setUnit mm
+#
+# /gras/analysis/pathLength/pathLengthDetector/initialise
+# /gras/histo/setHistoByName pathLengthDetector_path_length        	100 1E-06 1E+00 none none
+#
+# # SOURCE analysis
+# ########################################
+/gras/analysis/source/addModule source1
+/gras/analysis/source/source1/initialise
+/gras/histo/setHistoByName source1_kine  100 1E-05 1E+05 none log
+
+#******************** OUTPUT ********************#
+#_Pb1mm_poly160_Al40nm
+/gras/histo/fileName 		data/Mo3mm_nmAl_nmPolya_{target_layer}_4u_{target_detector}_macro_{source_case}
+#/gras/histo/fileName 		data/log_description_{target_detector}_macro_{monte_carlo}_{source_case}_{geometry_case}_{em_physics_mode}
+#/gras/histo/fileName 		data/{target_mirror_1}_macro_{monte_carlo}_{source_case}_{geometry_case}_{em_physics_mode}
+#/gras/histo/fileName 		data/{target_mirror_2}_macro_{monte_carlo}_{source_case}_{geometry_case}_{em_physics_mode}
+#/gras/histo/fileName 		data/{target_mirror_3}_macro_{monte_carlo}_{source_case}_{geometry_case}_{em_physics_mode}
+#/gras/histo/fileName 		data/{target_mirror_4}_macro_{monte_carlo}_{source_case}_{geometry_case}_{em_physics_mode}
+
+# visualization - close in RMC
+#
+# /control/execute macros/viewer.g4mac
+# /control/execute macros/vis.g4mac
+
+
+#/vis/viewer/zoomTo 10
+
+# text output of track step by step information to terminal/log
+# (useful in some cases for debugging with just a few events, but always set to 0 when running many events)
+
+/tracking/verbose 0
+
+# launch a run: an event loop with the particle source as defined above
+/control/execute macros/start_{monte_carlo}.g4mac

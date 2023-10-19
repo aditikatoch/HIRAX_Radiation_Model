@@ -1,0 +1,50 @@
+#
+# Sets some default verbose
+#
+/control/verbose 2
+/run/verbose 2
+#
+# create empty scene
+#
+/vis/scene/create
+#
+# Create a scene handler for a specific graphics system
+# (Edit the next line(s) to choose another graphic system)
+#
+#/vis/open ATree
+/vis/open OGL
+/vis/ogl/set/displayListLimit 500000
+#/vis/open VRML2FILE
+#/vis/open HepRepFile
+/vis/drawVolume
+/vis/scene/add/trajectories
+/vis/viewer/flush
+#
+####/vis/open DAWNFILE
+#
+# draw scene
+#
+/vis/viewer/set/style w
+#/vis/viewer/set/viewpointThetaPhi 0 0 deg
+#/vis/viewer/zoomTo 100
+#/vis/viewer/flush
+#
+# for drawing the tracks
+# (if too many tracks cause core dump => storeTrajectory 0)
+/tracking/storeTrajectory 1
+/vis/scene/endOfEventAction accumulate 100000
+#/vis/scene/endOfRunAction accumulate
+/vis/scene/endOfRunAction refresh
+
+/vis/viewer/set/auxiliaryEdge true
+/vis/viewer/set/lineSegmentsPerCircle 50
+
+/vis/viewer/set/viewpointThetaPhi 90 0
+#/vis/scene/add/axes
+
+
+# detailed positioning to see the details of the CCDs and the "det" at their surface
+#/vis/viewer/set/viewpointThetaPhi 90 89.9999
+#/vis/viewer/panTo -117.8 -158.9 cm
+/vis/viewer/zoomTo 1
+

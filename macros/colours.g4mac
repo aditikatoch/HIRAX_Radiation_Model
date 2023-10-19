@@ -1,0 +1,32 @@
+/gras/vis/util/addColour white        1    1    1
+/gras/vis/util/addColour grey         0.5  0.5  0.5
+/gras/vis/util/addColour light_grey   0.85 0.85 0.85
+
+/gras/vis/util/addColour red          1    0    0
+/gras/vis/util/addColour pink         1    0.3  0.7
+/gras/vis/util/addColour purple       0.63 0.13 0.94
+/gras/vis/util/addColour orchid       0.85 0.44 0.84
+
+/gras/vis/util/addColour green        0    1    0
+/gras/vis/util/addColour light_green  0    0.75 0
+/gras/vis/util/addColour aquamarine   0.5  1    0.83
+/gras/vis/util/addColour dark_green   0    0.39 0
+/gras/vis/util/addColour olive_green  0.33 0.42 0.18
+/gras/vis/util/addColour khaki        0.94 0.90 0.55
+
+/gras/vis/util/addColour blue         0    0    1
+/gras/vis/util/addColour light_blue   0    0    0.75
+/gras/vis/util/addColour navy_blue    0    0    0.5
+/gras/vis/util/addColour turquoise    0.25 0.88 0.82
+/gras/vis/util/addColour cyan         0    1    1
+
+/gras/vis/util/addColour yellow       1    1    0
+/gras/vis/util/addColour gold         1    0.84 0
+
+/gras/vis/util/addColour magenta      1    0    1
+
+/gras/vis/util/addColour orange       0.75 0.55 0
+/gras/vis/util/addColour salmon       0.98 0.5  0.45
+
+/gras/vis/util/addColour brown        0.65  0.16  0.16
+/gras/vis/util/addColour sienna       0.63 0.32 0.18

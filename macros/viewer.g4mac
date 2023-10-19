@@ -1,0 +1,120 @@
+/control/verbose 2
+/run/verbose 1
+
+######################### geometry ###########################
+/gras/geometry/type gdml
+/gdml/file geometry/geometry_hirax.gdml
+/gdml/setup World
+#
+
+######################### physics ###########################
+/gras/physics/addPhysics  em_standard_opt4
+#
+/run/initialize
+#
+/control/execute macros/colours.g4mac
+
+#### ADD COLOR TO LOGICAL VOLUMES #####
+
+ /gras/vis/util/setVolumeProperty colour green              name Bus_Log
+ /gras/vis/util/setVolumeProperty colour green              name Bus_Hollow_Log
+ /gras/vis/util/setVolumeProperty colour light_grey         name MLI_Log
+ /gras/vis/util/setVolumeProperty colour magenta            name Casing_Log
+ /gras/vis/util/setVolumeProperty colour brown		        name Truss_Log
+ /gras/vis/util/setVolumeProperty colour yellow            name Solar_Panel_Log
+ /gras/vis/util/setVolumeProperty colour red               name Detector_Log
+ /gras/vis/util/setVolumeProperty colour blue              name Mirror_Log
+/gras/vis/util/setVolumeProperty colour yellow            name Detector_Shield_Polymide_Log
+
+/gras/geometry/util/verbose 1
+/gras/geometry/util/listLogicalVolumes
+/gras/geometry/util/listPhysicalVolumes
+
+/geometry/test/run
+
+
+#setting up the source
+#
+/gps/particle e-
+#
+/gps/ene/type Mono
+/gps/ene/mono 1. MeV
+#
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/centre 0 0 0 mm
+/gps/pos/radius 200000 mm
+#
+/gps/ang/type cos
+/gps/ang/mintheta  0  deg
+/gps/ang/maxtheta 90  deg
+#
+
+/gras/analysis/autoSeed true
+/gras/analysis/seedsInFileName false
+
+/gras/histo/fileName      data/viewer
+
+/gras/analysis/dose/addModule dose_Detector
+/gras/analysis/dose/dose_Detector/addVolume Detector
+/gras/analysis/dose/dose_Detector/tallyIndividualVolumes false
+/gras/analysis/dose/dose_Detector/bookHistos true
+/gras/analysis/dose/dose_Detector/bookTuples false
+/gras/analysis/dose/dose_Detector/setUnit rad
+/gras/analysis/dose/dose_Detector/initialise
+/gras/histo/setHistoByName dose_Detector_dose                        80 1E-11 1E-03 none log
+/gras/histo/setHistoByName dose_Detector_total_dose_vs_primary_kine  80 1E-04 1E+04 none log
+
+
+# SOURCE analysis
+########################################
+/gras/analysis/source/addModule source1
+/gras/analysis/source/source1/bookTuples true
+/gras/analysis/source/source1/initialise
+/gras/histo/setHistoByName source1_kine  80 1E-04 1E+04 none log
+
+
+/gras/analysis/describe 2
+/gras/analysis/initialise
+/gras/histo/list
+
+/vis/open ATree
+/vis/ASCIITree/verbose 14
+/vis/scene/create
+/vis/scene/add/volume World
+/vis/sceneHandler/attach
+/vis/viewer/flush
+
+# VISUALIZATION
+#
+# create empty scene
+/vis/scene/create
+/vis/open OGL
+/vis/ogl/set/displayListLimit 500000
+/vis/drawVolume
+/vis/scene/add/trajectories
+/vis/viewer/flush
+# viewing style
+# w: wireframe, s: solid
+/vis/viewer/set/style w
+#
+# for drawing the tracks
+# (if too many tracks cause core dump => storeTrajectory 0)
+/tracking/storeTrajectory 1
+/vis/scene/endOfEventAction accumulate
+#/vis/scene/endOfRunAction accumulate
+
+/vis/viewer/set/auxiliaryEdge true
+/vis/viewer/set/lineSegmentsPerCircle 50
+
+/vis/viewer/set/viewpointThetaPhi 0 0 deg
+#/vis/scene/add/axes
+
+/vis/viewer/zoomTo 5
+
+# track step by step information to terminal/log
+/tracking/verbose 0
+
+########run command #######
+/gras/event/printModulo  10000
+#/run/beamOn              100

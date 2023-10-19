@@ -1,0 +1,4 @@
+#######run command #######
+/gras/event/printModulo  {printmodulo}
+/run/beamOn              {nevents}
+#
