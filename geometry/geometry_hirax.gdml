@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../GDMLSchema/gdml.xsd">
+
+<!-- Pre defined elements constant and quantities-->
+<define>
+  <constant name="HALFPI" value="pi/2."/>
+  <constant name="PI" value="1.*pi"/>
+  <constant name="TWOPI" value="2.*pi"/>
+
+<!-- THE WORLD -->
+  <quantity name="World_X"     type="length" value="2000000." unit="mm"/>
+  <quantity name="World_Y"     type="length" value="2000000." unit="mm"/>
+  <quantity name="World_Z"     type="length" value="2000000." unit="mm"/>
+
+<!--*******************************************-->
+<!--******* 1. Definition of Dimensions *******-->
+<!--*******************************************-->
+
+  <variable name="i" value="0"/>
+
+<!-- Origin defintion: Back of the Spacecraft Bus -->
+  <quantity name="Origin_X" type="length" value="0" unit="mm"/>
+  <quantity name="Origin_Y" type="length" value="0" unit="mm"/>
+  <quantity name="Origin_Z" type="length" value="0" unit="mm"/>
+
+<!-- SPACECRAFT BUS -->
+<!-- Hollow Cylinder/Tube: h = 2m, o_diameter = 4m, i_diameter (shielding dependent) = 3.6m -->
+  <quantity name="Bus_Thickness"  type="length" value="500" unit="mm"/>
+  <quantity name="Bus_Z"          type="length" value="2000." unit="mm"/>
+  <quantity name="Bus_Rmax"       type="length" value="2000." unit="mm"/>
+
+  <quantity name="Bus_Hollow_Z"         type="length" value="1990." unit="mm"/>
+  <quantity name="Bus_Hollow_Rmax"       type="length" value="1990." unit="mm"/>
+
+
+<!-- INSTRUMENT PAYLOAD -->
+<!-- Mirrors -->
+  <quantity name="Mirror_X"           type="length" value="1280" unit="mm"/>
+  <quantity name="Mirror_Y"           type="length" value="20" unit="mm"/>
+  <quantity name="Mirror_Z"           type="length" value="1800" unit="mm"/>
+  <!-- Mirror Reflector Layer -->
+  <quantity name="Mirror_Coat_Y"           type="length" value="0.0000001" unit="mm"/>
+
+<!-- Detector x =50-->
+  <quantity name="Detector_X"           type="length" value="50" unit="mm"/>
+  <quantity name="Detector_Y"           type="length" value="67" unit="mm"/>
+  <quantity name="Detector_Z"           type="length" value="1800" unit="mm"/>
+
+<!-- STRUCTURE -->
+<!-- Instrument Optical: 14.69 m-->
+<!-- Bus: 2 m , 10mm thick -->
+<!-- Truss: 20 mm beams (15 mm thick) -->
+<!-- Casing: 2 mm-->
+<!-- MLI: 0.05 mm-->
+<!-- Thickness of the INT: 167mm (STR) -->
+<!-- Solar Panel: 5 mm -->
+<!-- OSR Coating (not required in the first order calculations) -->
+<!-- Detector Coating: 160nm Polymide + 40 nm Al with 1mm Pb on +/- Y and +/- Z (+/- X in GDML model)-->
+
+<!-- MLI 20 layers eff = 1mm -->
+  <quantity name="MLI_X"           type="length" value="14690" unit="mm"/>
+  <quantity name="MLI_Y"           type="length" value="2044.1" unit="mm"/>
+  <quantity name="MLI_Z"           type="length" value="2044.1" unit="mm"/>
+
+<!-- MLI Subtraction => Casing -->
+  <quantity name="MLI_Thickness"   type="length" value="0.05" unit="mm"/>
+  <!-- <quantity name="Casing_XRI_X"          same as name="MLI_X"  -->
+  <expression name="MLI_Case_Sub_Y"> MLI_Y - 2.*MLI_Thickness </expression>
+  <!-- <expression name="Casing_XRI_Z"> Casing_XRI_Y same as name="Same as Truss_Y" -->
+
+<!-- Casing subtraction => Truss -->
+  <quantity name="Casing_XRI_Thickness"   type="length" value="2" unit="mm"/>
+  <expression name="Casing_Truss_Sub_Y"> MLI_Case_Sub_Y - 2.*Casing_XRI_Thickness </expression>
+
+ <expression name="Side_Shield_Z"> Detector_X  + 0.002 </expression>
+
+<!-- Truss Subtraction-->
+  <!-- <quantity name="Truss_Thickness"            type="length" value="20" unit="mm"/>
+  <expression name="Truss_Y"> Casing_Truss_Sub_Y - 2.*Truss_Thickness  </expression> -->
+
+
+<!-- Solar Panel: 0.2 m -->
+  <quantity name="Solar_Panel_X"           type="length" value="7000" unit="mm"/>
+  <quantity name="Solar_Panel_Y"           type="length" value="2054.1" unit="mm"/>
+  <quantity name="Solar_Panel_Z"           type="length" value="2054.1" unit="mm"/>
+  <quantity name="Solar_Panel_Thickness"   type="length" value="10" unit="mm"/>
+
+<!--Solar panel subtraction  = Add_MLI_X, MLI_Y, MLI_Z -->
+  <quantity name="Solar_Panel_Sub_X"           type="length" value="7010" unit="mm"/>
+<!-- <expression name="Solar_Panel_MLI_Y"> Solar_Panel_XRI_Y - 2*Solar_Panel__XRI_Thickness </expression> -->
+<!-- <expression name="Solar_Panel_MLI_Z"> Solar_PanFirstel_MLI_Y </expression> -->
+
+
+<!-- NOT ADDED: Additional MLI Layers in part without solar panel -->
+  <!-- <quantity name="Add_MLI_X"           type="length" value="7" unit="m"/>
+  <quantity name="Add_MLI_Y"           type="length" value="2.02" unit="m"/>
+  <quantity name="Add_MLI_Z"           type="length" value="2.02" unit="m"/>
+  <quantity name="Add_MLI_Thickness"   type="length" value="0.01" unit="m"/> -->
+
+<!--Additional MLI subtraction = Add_MLI_X, MLI_Y, MLI_Z -->
+<!-- <quantity name="Solar_Panel_MLI_X"           type="length" value="7" unit="m"/> -->
+<!-- <expression name="Inner_Add_MLI_Y"> Solar_Panel_XRI_Y - 2*Solar_Panel__XRI_Thickness </expression>  -->
+<!-- <expression name="Solar_Panel_MLI_Z"> Solar_Panel_MLI_Y </expression> -->
+
+
+
+<!-- ##################################################################### POSITION VARIABLE DEFINITIONS ################################################################## -->
+  <quantity name="Bus_Pos_X"                      type="length"   value="1000"        unit="mm"/>
+  <quantity name="Bus_Pos_X_mm"                      type="length"   value="1000"        unit="mm"/>
+  <!-- 0+1-->  <!-- If this is change change the overlap subtraction around 323 line-->
+
+  <quantity name="Casing_Pos_X"                    type="length"   value="9345"     unit="mm"/> <!-- 2 + 14.55/2 same for truss -->
+<!--
+  <quantity name="Add_MLI_Pos_X"                  type="length"   value="9500"     unit="mm"/>  -->
+
+  <quantity name="Solar_Panel_Pos_X"   			      type="length"   value="13000"       unit="mm"/> <!-- 2 + (7.5 + 7)/2 -->
+
+  <quantity name="Detector_Pos_X"                 type="length"   value="2025"    unit="mm"/>
+  <expression name="Detector_Lower_Pos_Y"> Origin_Y - 150 </expression>
+  <expression name="Detector_Pos_Y"> Origin_Y + 150 </expression>
+
+<!-- Collecting mirrors 2 y 1 m in x -->
+  <quantity name="Mirror_1_Pos_X"                 type="length"   value="16000"    unit="mm"/> <!-- 2 +  14   -->
+  <quantity name="Mirror_1_Pos_Y"                 type="length"   value="900"    unit="mm"/> <!--  -->
+  <quantity name="Mirror_1_Coat_Pos_Y"            type="length"   value="888.99"    unit="mm"/>
+
+  <quantity name="Mirror_1_Inner_Pos_Y"                 type="length"   value="600"    unit="mm"/> <!--  -->
+  <quantity name="Mirror_1_Inner_Coat_Pos_Y"            type="length"   value="588.99"    unit="mm"/>
+
+  <quantity name="Mirror_1_Lower_Pos_Y"                 type="length"   value="500"    unit="mm"/> <!--  -->
+  <quantity name="Mirror_1_Lower_Coat_Pos_Y"            type="length"   value="488.99"    unit="mm"/>
+
+  <quantity name="Mirror_1_Lower_Inner_Pos_Y"                 type="length"   value="200"    unit="mm"/> <!--  -->
+  <quantity name="Mirror_1_Lower_Inner_Coat_Pos_Y"            type="length"   value="188.99"    unit="mm"/>
+
+  <!-- <expression name="Coat"> MLI_Y- 2*MLI_Thickness </expression> -->
+  <!-- Thickness of mirror = 0.02 mm so half of that -->
+
+
+  <quantity name="Mirror_3_Pos_X"                 type="length"   value="16000"    unit="mm"/> <!-- same as 1 -->
+  <quantity name="Mirror_3_Pos_Y"                 type="length"   value="-800"    unit="mm"/> <!-- -->
+  <quantity name="Mirror_3_Coat_Pos_Y"            type="length"   value="-788.99"    unit="mm"/>
+
+  <quantity name="Mirror_3_Inner_Pos_Y"                 type="length"   value="-500"    unit="mm"/> <!-- -->
+  <quantity name="Mirror_3_Inner_Coat_Pos_Y"            type="length"   value="-488.99"    unit="mm"/>
+
+
+
+  <quantity name="Mirror_3_Lower_Pos_Y"                 type="length"   value="-400"    unit="mm"/> <!-- -->
+  <quantity name="Mirror_3_Lower_Coat_Pos_Y"            type="length"   value="-388.99"    unit="mm"/>
+
+  <quantity name="Mirror_3_Lower_Inner_Pos_Y"                 type="length"   value="-100"    unit="mm"/> <!-- -->
+  <quantity name="Mirror_3_Lower_Inner_Coat_Pos_Y"            type="length"   value="-88.99"    unit="mm"/>
+
+<!-- Combining mirrors -->
+  <quantity name="Mirror_2_Pos_X"                 type="length"   value="8410"    unit="mm"/> <!--2 + 0.05 + 3.780 -->
+  <quantity name="Mirror_2_Pos_Y"                 type="length"   value="40"    unit="mm"/>
+  <!--<quantity name="Mirror_2_Coat_Pos_Y"            type="length"   value="0"    unit="mm"/>  CONFIRM IF NEEDED -->
+
+  <quantity name="Mirror_2_Lower_Pos_Y"                 type="length"   value="-260"    unit="mm"/> <!--
+  <quantity name="Mirror_2_Lower_Coat_Pos_Y"            type="length"   value="-889.99"    unit="mm"/> -->
+
+  <quantity name="Mirror_4_Pos_X"                 type="length"   value="9690"    unit="mm"/> <!-- 2 + 0.05 + 4.78 -->
+  <quantity name="Mirror_4_Pos_Y"                 type="length"   value="40"    unit="mm"/>
+  <quantity name="Mirror_4_Coat_Pos_Y"            type="length"   value="-11.01"    unit="mm"/>
+
+  <quantity name="Mirror_4_Lower_Pos_Y"                 type="length"   value="-260"    unit="mm"/> <!-- -->
+  <quantity name="Mirror_4_Lower_Coat_Pos_Y"            type="length"   value="-271.01"    unit="mm"/>
+
+
+
+<!-- #################################################################### POSITION DEFINITION IN 3D ##################################################################### -->
+
+<!-- Position dimension are flipped for X and Z -->
+
+  <position name="Bus_Pos"  	             x="Origin_X" y="Origin_Y" z="Bus_Pos_X" unit="mm" />
+
+  <position name="Casing_Pos"  				     x="Origin_Z" y="Origin_Y" z="Casing_Pos_X" unit="mm" />
+
+  <position name="Add_MLI_Pos"  				   x="Origin_Z" y="Origin_Y" z="Casing_Pos_X"  />
+
+  <position name="Solar_Panel_XRI_Pos"  	 x="Origin_Z" y="Origin_Y" z="Solar_Panel_Pos_X" unit="mm" />
+
+<!-- Mirror 1-->
+  <position name="Mirror_1_Pos"  	 x="Origin_Z" y="Mirror_1_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Rot" x="3" unit="deg"/>
+
+  <position name="Mirror_1_Coat_Pos"  	 x="Origin_Z" y="Mirror_1_Coat_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Rot" x="3" unit="deg"/>
+
+  <position name="Mirror_1_Inner_Pos"  	 x="Origin_Z" y="Mirror_1_Inner_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Rot" x="3" unit="deg"/>
+
+  <position name="Mirror_1_Inner_Coat_Pos"  	 x="Origin_Z" y="Mirror_1_Inner_Coat_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Rot" x="3" unit="deg"/>
+
+  <position name="Mirror_1_Lower_Pos"  	 x="Origin_Z" y="Mirror_1_Lower_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Lower_Rot" x="0.6" unit="deg"/>
+  <position name="Mirror_1_Lower_Coat_Pos"  	 x="Origin_Z" y="Mirror_1_Lower_Coat_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Lower_Rot" x="0.6" unit="deg"/>
+
+  <position name="Mirror_1_Lower_Inner_Pos"  	 x="Origin_Z" y="Mirror_1_Lower_Inner_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Lower_Rot" x="0.6" unit="deg"/>
+  <position name="Mirror_1_Lower_Inner_Coat_Pos"  	 x="Origin_Z" y="Mirror_1_Lower_Inner_Coat_Pos_Y" z="Mirror_1_Pos_X" unit="mm" />
+  <rotation name= "Mirror_1_Lower_Rot" x="0.6" unit="deg"/>
+
+<!-- Mirror 3 -->
+  <position name="Mirror_3_Pos"  	 x="Origin_Z" y="Mirror_3_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_3_Coat_Pos"  	 x="Origin_Z" y="Mirror_3_Coat_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_3_Inner_Pos"  	 x="Origin_Z" y="Mirror_3_Inner_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_3_Inner_Coat_Pos"  	 x="Origin_Z" y="Mirror_3_Inner_Coat_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_3_Lower_Pos"  	 x="Origin_Z" y="Mirror_3_Lower_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Lower_Rot" x="-0.6" unit="deg"/>
+
+  <position name="Mirror_3_Lower_Coat_Pos"  	 x="Origin_Z" y="Mirror_3_Lower_Coat_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Lower_Rot" x="-0.6" unit="deg"/>
+
+  <position name="Mirror_3_Lower_Inner_Pos"  	 x="Origin_Z" y="Mirror_3_Lower_Inner_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Lower_Rot" x="-0.6" unit="deg"/>
+
+  <position name="Mirror_3_Lower_Inner_Coat_Pos"  	 x="Origin_Z" y="Mirror_3_Lower_Inner_Coat_Pos_Y" z="Mirror_3_Pos_X"  unit="mm"/>
+  <rotation name= "Mirror_3_Lower_Rot" x="-0.6" unit="deg"/>
+
+
+<!-- Mirror 2 -->
+  <position name="Mirror_2_Pos"  	 x="Origin_Z" y="Mirror_2_Pos_Y" z="Mirror_2_Pos_X" unit="mm" />
+  <rotation name= "Mirror_2_Rot" x="3" unit="deg"/>
+
+  <!-- <position name="Mirror_2_Coat_Pos"  	 x="Origin_Z" y="Mirror_2_Coat_Pos_Y" z="Mirror_4_Pos_X" unit="mm" />
+  <rotation name= "Mirror_2_Rot" x="3" unit="deg"/> -->
+
+  <position name="Mirror_2_Lower_Pos"  	 x="Origin_Z" y="Mirror_2_Lower_Pos_Y" z="Mirror_2_Pos_X" unit="mm" />
+  <rotation name= "Mirror_2_Rot" x="3" unit="deg"/>
+
+  <!-- <position name="Mirror_2_Lower_Coat_Pos"  	 x="Origin_Z" y="Mirror_2_Lower_Coat_Pos_Y" z="Mirror_4_Pos_X" unit="mm" />
+  <rotation name= "Mirror_2_Rot" x="3" unit="deg"/> -->
+
+
+<!-- Mirror 4 -->
+  <position name="Mirror_4_Pos"  	 x="Origin_Z" y="Origin_Y" z="Mirror_4_Pos_X" unit="mm" />
+  <rotation name= "Mirror_4_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_4_Coat_Pos"  	 x="Origin_Z" y="Mirror_4_Coat_Pos_Y" z="Mirror_4_Pos_X" unit="mm"  />
+  <rotation name= "Mirror_4_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_4_Lower_Pos"  	 x="Origin_Z" y="Mirror_4_Lower_Pos_Y" z="Mirror_4_Pos_X" unit="mm" />
+  <rotation name= "Mirror_4_Rot" x="-3" unit="deg"/>
+
+  <position name="Mirror_4_Lower_Coat_Pos"  	 x="Origin_Z" y="Mirror_4_Lower_Coat_Pos_Y" z="Mirror_4_Pos_X" unit="mm"  />
+  <rotation name= "Mirror_4_Rot" x="-3" unit="deg"/>
+
+
+
+
+  <!-- Detectors-->
+  <!-- D1 -->
+    <position name="Detector_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="Detector_Pos_X" unit="mm" />
+    <position name="Detector_Layer_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="2050.002" unit="mm" />
+    <position name="Detector_Shield_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="2025.002" unit="mm" />
+
+  <!-- D2 -->
+    <position name="Detector_Lower_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="Detector_Pos_X" unit="mm" />
+    <position name="Detector_Lower_Layer_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="2050.002" unit="mm" />
+    <position name="Detector_Lower_Shield_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="2025.002" unit="mm" />
+
+
+<!-- Graded z shield-->
+    <quantity name="Kapton_Polymide_Layer"                      type="length"   value="0.000160"        unit="mm"/>
+    <quantity name="Kapton_Polymide_Metal_Layer"                type="length"   value="0.000040"        unit="mm"/>
+
+    <expression name="Detector_Shield_Polymide_Layer_Pos_X"> 2050.004 + (Kapton_Polymide_Layer/2) </expression>
+
+    <expression name="Detector_Shield_Polymide_Metal_Layer_Pos_X"> 2050.004 + Kapton_Polymide_Layer + (Kapton_Polymide_Metal_Layer)/2 </expression>
+
+    <position name="Detector_Shield_Polymide_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="Detector_Shield_Polymide_Layer_Pos_X" unit="mm" />
+    <position name="Detector_Shield_Polymide_Metal_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="Detector_Shield_Polymide_Metal_Layer_Pos_X" unit="mm" />
+
+    <position name="Detector_Lower_Shield_Polymide_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="Detector_Shield_Polymide_Layer_Pos_X" unit="mm" />
+    <position name="Detector_Lower_Shield_Polymide_Metal_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="Detector_Shield_Polymide_Metal_Layer_Pos_X" unit="mm" />
+
+
+
+
+
+
+  <position name="pos_centre"    />
+  <rotation name="rot_identity"  />
+
+
+</define>
+
+
+
+
+
+
+
+
+<!--*******************************************************************-->
+<!--******* 2. Definition of Materials *******-->
+<!--*******************************************************************-->
+
+<materials>
+  <define>
+    <quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3"/>
+  </define>
+ <!-- ############ Elements ############# -->
+ <!-- Si -->
+  <element name="ele_Silicon"    formula="Si" Z="14."> <atom value="28.09"/>    </element>
+  <material name="Si">
+    <D value="2.33" unit = "g/cm3"/>
+    <composite n="1" ref="ele_Silicon"/>
+  </material>
+
+  <!-- Be -->
+   <element name="ele_Beryllium"  formula="Be" Z="4."> <atom value="9.012"/>    </element>
+   <material name="Be" formula="Be">
+     <D value="1.85" unit = "g/cm3"/>  <!-- Density -->
+     <composite n="1" ref="ele_Beryllium"/>
+   </material>
+
+
+ <!-- Al -->
+  <element name="ele_Aluminium"  formula="Al" Z="13."> <atom value="26.98"/>    </element>
+  <material name="Al" formula="Al">
+    <D value="2.7" unit = "g/cm3"/>  <!-- Density -->
+    <composite n="1" ref="ele_Aluminium"/>
+  </material>
+
+  <!-- Mo -->
+   <element name="ele_Molybdenum"  formula="Mo" Z="42."> <atom value="95.95"/>    </element>
+   <material name="Mo" formula="Mo">
+     <D value="10.2" unit = "g/cm3"/>  <!-- Density -->
+     <composite n="1" ref="ele_Molybdenum"/>
+   </material>
+
+
+  <!-- Pb -->
+   <element name="ele_Lead"  formula="Pb" Z="82."> <atom value="207.2"/>    </element>
+   <material name="Pb" formula="Pb">
+     <D value="11.3" unit = "g/cm3"/>  <!-- Density -->
+     <composite n="1" ref="ele_Lead"/>
+   </material>
+
+
+ <!-- Sn -->
+  <element name="ele_Tin"  formula="Sn" Z="50."> <atom value="118.710"/>    </element>
+  <material name="Sn" formula="Sn">
+    <D value="7.287" unit = "g/cm3"/>  <!-- Density -->
+    <composite n="1" ref="ele_Tin"/>
+  </material>
+
+
+  <!-- Ir -->
+  <element name="ele_Iridium"   formula="Ir"  Z="77.">  <atom value="192.22"/>     </element>
+  <material name="Ir" formula="Ir">
+    <D value="22.56" unit = "g/cm3"/>  <!-- Density -->
+    <composite n="1" ref="ele_Iridium"/>
+  </material>
+
+ <!-- O -->
+  <element name="ele_Oxygen"     formula="O"  Z="8.">  <atom value="16.0"/>     </element>
+ <!-- Ti -->
+  <element name="ele_Titanium"   formula="Ti" Z="22."> <atom value="47.867"/>   </element>
+<!-- Br -->
+  <element name="ele_Bromine"     formula="Br"  Z="35.">  <atom value="79.904"/>    </element>
+<!-- C -->
+  <element name="ele_Carbon"     formula="C"  Z="6.">  <atom value="12.01"/>    </element>
+<!-- H -->
+  <element name="ele_Hydrogen"   formula="H"  Z="1.">  <atom value="1.01"/>     </element>
+<!-- N -->
+  <element name="ele_Nitrogen"   formula="N"  Z="7.">  <atom value="14."/>     </element>
+<!-- Pb -->
+  <element name="ele_Lead"     formula="Pb"  Z="82.">  <atom value="207.2"/>    </element>
+<!-- Pb -->
+  <element name="ele_Tin"     formula="Sn"  Z="50.">  <atom value="118.710"/>    </element>
+
+<!-- ####### Compounds ############ -->
+<!-- SiO2 -->
+  <material name="Silicon_Dioxide" formula="SiO2">
+    <D value="2.32" unit = "g/cm3"/>
+    <composite n="1" ref="ele_Silicon"/>
+    <composite n="2" ref="ele_Oxygen"/>
+  </material>
+
+<!-- https://www.physics.nist.gov/cgi-bin/Star/compos.pl?mode=text&refer=ap&matno=179 -->
+  <!-- <material name="Kapton" formula="Kapton">
+    <D value="1.42" unit = "g/cm3"/>
+    <composite n="20" ref="ele_Carbon"/>
+    <composite n="5" ref="ele_Oxygen"/>
+    <composite n="10" ref="ele_Hydrogen"/>
+    <composite n="2" ref="ele_Nitrogen"/>
+  </material> -->
+
+<!-- Polymide: https://www.researchgate.net/publication/362012723_Filters_for_X-ray_detectors_on_Space_missions Page 15 -->
+<material name="Polyamide" formula="Polyamide">
+  <D value="1.42" unit = "g/cm3"/>
+  <composite n="22" ref="ele_Carbon"/>
+  <composite n="5" ref="ele_Oxygen"/>
+  <composite n="10" ref="ele_Hydrogen"/>
+  <composite n="2" ref="ele_Nitrogen"/>
+</material>
+
+
+<!-- SiC -->
+  <material name="Silicon_Carbide" formula="SiC">
+    <D value="3.21" unit = "g/cm3"/>
+    <composite n="1" ref="ele_Silicon"/>
+    <composite n="1" ref="ele_Carbon"/>
+   </material>
+
+<!-- Vacuum is already defined in GRAS-->
+  <material name="Vacuum" Z="1.">
+   <T value="2.73"/> <P value="3.0e-18" unit="pascal"/> <Dref ref="universe_mean_density"/>
+   <atom value="1.01"/>
+  </material>
+
+ </materials>
+
+
+<!--***********************************************************************-->
+<!--******* 3. Definition of Solids *******-->
+<!--*******************************************************************-->
+
+<solids>
+  <box name="World_Sol" x="World_X" y="World_Y" z="World_Z" lunit="mm"/>
+
+ <!-- Spacecraft Bus -->
+  <tube name="Bus_Sol" rmin="0" rmax="Bus_Rmax" z="Bus_Z" deltaphi="90" startphi="0" aunit="rad" lunit="mm"  />
+
+
+<!-- Insert Hollow subtraction of Bus -->
+  <tube name = "Bus_Subtract" rmin="0" rmax="Bus_Hollow_Rmax" z="Bus_Hollow_Z" deltaphi="90" startphi="0" aunit="rad" lunit="mm" />
+  <subtraction name="Bus_Hollow_Sol">
+    <first ref="Bus_Sol"/> <second ref="Bus_Subtract"/>
+    <positionref ref = "pos_centre"/>
+  </subtraction>
+
+
+  <!-- MLI  -->
+	<box name="MLI_Box_Sol"  x="MLI_Z" y="MLI_Y" z="MLI_X" lunit="mm" />
+	<box name="Casing_MLI_Sub_Sol"  x="MLI_Case_Sub_Y" y="MLI_Case_Sub_Y" z="MLI_X" lunit="mm" />
+  	<subtraction name="MLI_Sol">
+    	<first ref="MLI_Box_Sol"/> <second ref="Casing_MLI_Sub_Sol"/>
+      <positionref ref = "pos_centre"/>
+  	</subtraction>
+
+<!-- Casing  -->
+  <box name="Case_Box_Sol"  x="MLI_Case_Sub_Y" y="MLI_Case_Sub_Y" z="MLI_X" lunit="mm" />
+  <box name="Case_Truss_Sub_Sol"  x="Casing_Truss_Sub_Y" y="Casing_Truss_Sub_Y" z="MLI_X" lunit="mm"/>
+    	<subtraction name="Casing_Sol">
+        	<first ref="Case_Box_Sol"/> <second ref="Case_Truss_Sub_Sol"/>
+          <positionref ref = "pos_centre"/>
+    	</subtraction>
+
+<!-- Truss - According to effective Area
+  <box name="Truss_Box_Sol"  x="Casing_Truss_Sub_Y" y="Casing_Truss_Sub_Y" z="MLI_X" lunit="mm"/>
+  <box name="Truss_Sub_Sol"  x="Truss_Y" y="Truss_Y" z="MLI_X" lunit="mm"/>
+    	<subtraction name="Truss_Sol">
+        	<first ref="Truss_Box_Sol"/> <second ref="Truss_Sub_Sol"/>
+          <positionref ref = "pos_centre"/>
+    	</subtraction>
+-->
+<!-- Truss Loop -->
+  <box name="trussStruct" x="20" y="20" z="14690" lunit="mm"/>
+  <box name="trussStruct_Sub" x="10" y="10" z="14690" lunit="mm"/>
+    <subtraction name="trussStruct_X">
+      <first ref="trussStruct"/> <second ref="trussStruct_Sub"/>
+      <positionref ref = "pos_centre"/>
+    </subtraction>
+
+<!-- Add_MLI
+	<box name="Casing_Box_Sol"  x="ELB_X" y="ELB_Y" z="ELB_Z" />
+	<box name="ELB_Sol_Inner"  x="ELB_X_Inner" y="ELB_Y_Inner" z="ELB_Z_Inner" />
+    	<subtraction name="ELB_Sol">
+        	<first ref="ELB_Sol_Outer"/> <second ref="ELB_Sol_Inner"/>
+    	</subtraction>
+-->
+
+ <!-- Solar Panel -->
+  <box name="Solar_Panel_Box_Sol"  x="Solar_Panel_Z" y="Solar_Panel_Y" z="Solar_Panel_X" lunit="mm" />
+  <box name="Solar_Panel_MLI_Sub"  x="MLI_Z" y="MLI_Y" z="Solar_Panel_Sub_X" lunit="mm"/>
+    	<subtraction name="Solar_Panel_Sol">
+        	<first ref="Solar_Panel_Box_Sol"/> <second ref="Solar_Panel_MLI_Sub"/>
+    	</subtraction>
+
+<!-- Mirror 1 -->
+  <box name="Mirror_Sol"  x="Mirror_Z" y="Mirror_Y" z="Mirror_X" lunit="mm"/>
+
+<!-- Mirror 2 -->
+
+<!-- <box name="Mirror_2_Sol_Struct"  x="Mirror_Z" y="Mirror_Y" z="Mirror_X" lunit="mm"/>
+<box name="Mirror_2_Sol_Struct_Sub"  x="Mirror_Z" y="Mirror_Y" z="1" lunit="mm"/>
+    <subtraction name="Mirror_2_Sol"/>
+        <first ref="Mirror_2_Sol_Struct"/> <second ref="Mirror_2_Sol_Struct_Sub"/>
+        <position name="Mirror_2_Pos_Pos[i+1]"  x="Origin_X" y="Origin_Y" z="Mirror_2_Pos_X+2*i" unit="mm" />
+    </subtraction> -->
+
+    <box name="Mirror_2_Sol_Struct"  x="Mirror_Z" y="Mirror_Y" z="Mirror_X" lunit="mm" />
+  <!-- <loop for="i" from="0" to="4" step="1"> -->
+    <box name="Mirror_2_Sol_Struct_Sub"  x="1750" y="30" z="230" lunit="mm"/>
+
+    <subtraction name="Mirror_2_First_Sol">
+      <first ref="Mirror_2_Sol_Struct"/> <second ref="Mirror_2_Sol_Struct_Sub"/>
+      <position name="Mirror_2_First_Pos"  x="0" y="0" z="400" unit="mm" />
+    </subtraction>
+    <subtraction name="Mirror_2_Second_Sol">
+      <first ref="Mirror_2_First_Sol"/> <second ref="Mirror_2_Sol_Struct_Sub"/>
+      <position name="Mirror_2_Pos_Pos"  x="0" y="0" z="0" unit="mm" />
+    </subtraction>
+    <subtraction name="Mirror_2_Sol">
+      <first ref="Mirror_2_Second_Sol"/> <second ref="Mirror_2_Sol_Struct_Sub"/>
+      <position name="Mirror_2_Pos_Pos"  x="0" y="0" z="-400" unit="mm" />
+    </subtraction>
+   <!-- </loop> -->
+
+ <!-- Mirror Coat -->
+   <box name="Mirror_Coat_Sol"  x="Mirror_Z" y="Mirror_Coat_Y" z="Mirror_X" lunit="mm"/>
+
+
+
+
+
+
+
+<!-- Detector -->
+ <box name="Detector_Sol"  x="Detector_Z" y="Detector_Y" z="Detector_X" lunit="mm"/>
+<box name="Detector_Layer_Sol"  x="Detector_Z" y="Detector_Y" z="0.004" lunit="mm"/>
+<!-- Shield_D2 -->
+ <!-- <box name="Shield_Polymide_Sol"  x="1800" y="67" z="0.000160" lunit="mm"/>
+<box name="Shield_Polymide_Metal_Sol"  x="1800" y="67" z="0.000040" lunit="mm"/> -->
+
+<!-- Layer Shield Al: 3um / Poly: 10 um-->
+<box name="Shield_Polymide_Sol"  x="Detector_Z" y="Detector_Y" z="Kapton_Polymide_Layer" lunit="mm"/>
+<box name="Shield_Polymide_Metal_Sol"  x="Detector_Z" y="Detector_Y" z="Kapton_Polymide_Metal_Layer" lunit="mm"/>
+
+
+ <!-- Bulk Shield - 10mm -->
+ <box name="Shield_Sol_Al"  x="1848" y="115" z="Side_Shield_Z" lunit="mm"/>
+  <!-- <box name="Shield_Sol"  x="1813" y="80" z="Side_Shield_Z" lunit="mm"/> -->
+  <box name="Shield_Sub_Sol"  x="1808" y="75" z="Side_Shield_Z" lunit="mm"/>
+ <subtraction name="Detector_Shield_Sol">
+     <first ref="Shield_Sol_Al"/> <second ref="Shield_Sub_Sol"/>
+ </subtraction>
+
+ <box name="Shield_Sol_Mo"  x="1808" y="75" z="Side_Shield_Z" lunit="mm"/>
+  <!-- <box name="Shield_Sol"  x="1813" y="80" z="Side_Shield_Z" lunit="mm"/> -->
+  <box name="Shield_Sub_Mo_Sol"  x="1802" y="75" z="Side_Shield_Z" lunit="mm"/>
+ <subtraction name="Detector_Shield_Metal_Sol">
+     <first ref="Shield_Sol_Mo"/> <second ref="Shield_Sub_Mo_Sol"/>
+ </subtraction>
+
+
+ <box name="Shield_Sol_Kapton"  x="1802" y="69" z="Side_Shield_Z" lunit="mm"/>
+  <!-- <box name="Shield_Sol"  x="1813" y="80" z="Side_Shield_Z" lunit="mm"/> -->
+  <box name="Shield_Sub_Kapton_Sol"  x="Detector_Z" y="Detector_Y" z="Side_Shield_Z" lunit="mm"/>
+ <subtraction name="Detector_Shield_Polyamide_Sol">
+     <first ref="Shield_Sol_Kapton"/> <second ref="Shield_Sub_Kapton_Sol"/>
+ </subtraction>
+
+
+ <!--
+ DIMENSION REFERENCE
+ <quantity name="Detector_X"           type="length" value="50" unit="mm"/>
+ <quantity name="Detector_Y"           type="length" value="67" unit="mm"/>
+ <quantity name="Detector_Z"           type="length" value="1800" unit="mm"/>
+-->
+
+
+
+
+
+
+
+
+
+
+</solids>
+
+
+
+<!--*******************************************************************-->
+<!--******* 4. Definition of Structure  *******-->
+<!--*******************************************************************-->
+
+<structure>
+
+<!-- ############################################ LOGICAL VOLUME ########################################## -->
+
+<!-- Spacecraft Bus -->
+<!--
+  <volume name = "Bus_Log">
+  	<materialref ref = "Al"/> <solidref ref = "Bus_Sol"/>
+  </volume>
+-->
+
+<!-- Spacecraft Bus -->
+  <volume name = "Bus_Hollow_Log">
+  	<materialref ref = "Al"/> <solidref ref = "Bus_Hollow_Sol"/>
+  </volume>
+
+<!-- MLI-->
+  <volume name = "MLI_Log">
+  	<materialref ref = "Al"/> <solidref ref = "MLI_Sol"/>
+  </volume>
+
+<!-- OPB Casing -->
+  <volume name = "Casing_Log">
+  	<materialref ref = "Silicon_Carbide"/> <solidref ref = "Casing_Sol"/>
+  </volume>
+
+<!-- OPB Truss
+  <volume name = "Truss_Log">
+    <materialref ref = "Silicon_Carbide"/> <solidref ref = "Truss_Sol"/>
+  </volume>
+-->
+
+
+  <loop for="i" from="0" to="3" step="1">
+  <volume name= "trussVol[i+1]">
+    <materialref ref = "Silicon_Carbide"/> <solidref ref = "trussStruct_X"/>
+  </volume>
+  </loop>
+
+
+<!-- Solar Panel-->
+  <volume name = "Solar_Panel_Log">
+    <materialref ref = "Al"/> <solidref ref = "Solar_Panel_Sol"/>
+  </volume>
+
+<!-- Detector -->
+  <volume name = "Detector_Log">
+    <materialref ref = "Si"/> <solidref ref = "Detector_Sol"/>
+  </volume>
+
+  <!-- Detector Si Layer-->
+  <volume name = "Detector_Layer_Log">
+    <materialref ref = "Si"/> <solidref ref = "Detector_Layer_Sol"/>
+  </volume>
+
+<!-- Detector 1mm shield-->
+  <volume name = "Detector_Shield_Log">
+    <materialref ref = "Al"/> <solidref ref = "Detector_Shield_Sol"/>
+  </volume>
+
+  <volume name = "Detector_Shield_Metal_Log">
+    <materialref ref = "Mo"/> <solidref ref = "Detector_Shield_Metal_Sol"/>
+  </volume>
+
+
+  <volume name = "Detector_Shield_Polyamide_Log">
+    <materialref ref = "Polyamide"/> <solidref ref = "Detector_Shield_Polyamide_Sol"/>
+  </volume>
+
+
+
+  <volume name = "Detector_Shield_Filter_Polymide_Log">
+    <materialref ref = "Polyamide"/> <solidref ref = "Shield_Polymide_Sol"/>
+  </volume> -->
+  <volume name = "Detector_Shield_Polymide_Metal_Log">
+    <materialref ref = "Al"/> <solidref ref = "Shield_Polymide_Metal_Sol"/>
+  </volume>
+
+<!-- Mirrors -->
+  <volume name = "Mirror_Log">
+    <materialref ref = "Silicon_Carbide"/> <solidref ref = "Mirror_Sol"/>
+  </volume>
+
+<!-- Mirrors -->
+  <volume name = "Mirror_Coat_Log">
+    <materialref ref = "Ir"/> <solidref ref = "Mirror_Coat_Sol"/>
+  </volume>
+
+
+<!-- Slatted Mirror -->
+  <volume name = "Mirror_2_Log">
+    <materialref ref = "Si"/> <solidref ref = "Mirror_2_Sol"/>
+  </volume>
+
+<!-- ########### PHYSICAL WORLD VOLUME ######### -->
+<volume name="World">
+  <materialref ref="Vacuum"/> <solidref ref="World_Sol"/>
+
+<!-- ####################################################### PHYSICAL VOLUME ##################################################### -->
+
+<!--Bus-->
+  <physvol name="Bus"> <volumeref ref="Bus_Hollow_Log"/>     <positionref ref="Bus_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+<!--MLI-->
+  <physvol name="MLI"> <volumeref ref="MLI_Log"/>     <positionref ref="Casing_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+<!-- Solar Panel-->
+  <physvol name="Solar_Panel"> <volumeref ref="Solar_Panel_Log"/>     <positionref ref="Solar_Panel_XRI_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+
+
+<!-- Detector-->
+  <physvol name="Detector"> <volumeref ref="Detector_Log"/>     <positionref ref="Detector_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Layer"> <volumeref ref="Detector_Layer_Log"/>     <positionref ref="Detector_Layer_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower"> <volumeref ref="Detector_Log"/>     <positionref ref="Detector_Lower_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower_Layer"> <volumeref ref="Detector_Layer_Log"/>     <positionref ref="Detector_Lower_Layer_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+  <!-- Shielding-->
+
+
+  <!-- <physvol name="Detector_Shield_Filter_Polymide"> <volumeref ref="Detector_Shield_Filter_Polymide_Log"/>     <positionref ref="Detector_Shield_Polymide_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Shield_Polymide_Metal"> <volumeref ref="Detector_Shield_Polymide_Metal_Log"/>     <positionref ref="Detector_Shield_Polymide_Metal_Pos"/>     <rotationref ref="rot_identity"/> </physvol> -->
+
+
+
+<!--
+  <physvol name="Detector_Lower_Shield_Polymide"> <volumeref ref="Detector_Shield_Filter_Polymide_Log"/>     <positionref ref="Detector_Lower_Shield_Polymide_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower_Shield_Polymide_Metal"> <volumeref ref="Detector_Shield_Polymide_Metal_Log"/>     <positionref ref="Detector_Lower_Shield_Polymide_Metal_Pos"/>     <rotationref ref="rot_identity"/> </physvol> -->
+
+<physvol name="Detector_Shield"> <volumeref ref="Detector_Shield_Log"/>     <positionref ref="Detector_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower_Shield"> <volumeref ref="Detector_Shield_Log"/>     <positionref ref="Detector_Lower_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+
+  <physvol name="Detector_Shield_Metal"> <volumeref ref="Detector_Shield_Metal_Log"/>     <positionref ref="Detector_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+    <physvol name="Detector_Lower_Shield_Metal"> <volumeref ref="Detector_Shield_Log"/>     <positionref ref="Detector_Lower_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+
+    <physvol name="Detector_Shield_Polymide"> <volumeref ref="Detector_Shield_Polyamide_Log"/>     <positionref ref="Detector_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+      <physvol name="Detector_Lower_Shield_Polyamide"> <volumeref ref="Detector_Shield_Log"/>     <positionref ref="Detector_Lower_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+<!-- Mirror 1 -->
+  <physvol name="Mirror_1"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_1_Pos"/>     <rotationref ref="Mirror_1_Rot"/> </physvol>
+  <physvol name="Mirror_1_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_1_Coat_Pos"/>     <rotationref ref="Mirror_1_Rot"/> </physvol>
+
+  <physvol name="Mirror_1_Inner"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_1_Inner_Pos"/>     <rotationref ref="Mirror_1_Rot"/> </physvol>
+  <physvol name="Mirror_1_Inner_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_1_Inner_Coat_Pos"/>     <rotationref ref="Mirror_1_Rot"/> </physvol>
+
+  <physvol name="Mirror_1_Lower"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_1_Lower_Pos"/>     <rotationref ref="Mirror_1_Lower_Rot"/> </physvol>
+  <physvol name="Mirror_1_Lower_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_1_Lower_Coat_Pos"/>     <rotationref ref="Mirror_1_Lower_Rot"/> </physvol>
+
+  <physvol name="Mirror_1_Lower_Inner"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_1_Lower_Inner_Pos"/>     <rotationref ref="Mirror_1_Lower_Rot"/> </physvol>
+  <physvol name="Mirror_1_Lower_Inner_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_1_Lower_Inner_Coat_Pos"/>     <rotationref ref="Mirror_1_Lower_Rot"/> </physvol>
+
+<!-- Mirror 3 -->
+  <physvol name="Mirror_3"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_3_Pos"/>     <rotationref ref="Mirror_3_Rot"/> </physvol>
+  <physvol name="Mirror_3_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_3_Coat_Pos"/>     <rotationref ref="Mirror_3_Rot"/> </physvol>
+
+  <physvol name="Mirror_3_Inner"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_3_Inner_Pos"/>     <rotationref ref="Mirror_3_Rot"/> </physvol>
+  <physvol name="Mirror_3_Inner_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_3_Inner_Coat_Pos"/>     <rotationref ref="Mirror_3_Rot"/> </physvol>
+
+  <physvol name="Mirror_3_Lower"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_3_Lower_Pos"/>     <rotationref ref="Mirror_3_Lower_Rot"/> </physvol>
+  <physvol name="Mirror_3_Lower_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_3_Lower_Coat_Pos"/>     <rotationref ref="Mirror_3_Lower_Rot"/> </physvol>
+
+  <physvol name="Mirror_3_Lower_Inner"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_3_Lower_Inner_Pos"/>     <rotationref ref="Mirror_3_Lower_Rot"/> </physvol>
+  <physvol name="Mirror_3_Lower_Inner_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_3_Lower_Inner_Coat_Pos"/>     <rotationref ref="Mirror_3_Lower_Rot"/> </physvol>
+
+<!-- Mirror 2-->
+  <physvol name="Mirror_2"> <volumeref ref="Mirror_2_Log"/>     <positionref ref="Mirror_2_Pos"/>     <rotationref ref="Mirror_2_Rot"/> </physvol>
+
+
+  <physvol name="Mirror_2_Lower"> <volumeref ref="Mirror_2_Log"/>     <positionref ref="Mirror_2_Lower_Pos"/>     <rotationref ref="Mirror_2_Rot"/> </physvol>
+
+
+<!-- Mirror 4-->
+  <physvol name="Mirror_4"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_4_Pos"/>     <rotationref ref="Mirror_4_Rot"/> </physvol>
+  <physvol name="Mirror_4_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_4_Coat_Pos"/>     <rotationref ref="Mirror_4_Rot"/> </physvol>
+
+
+  <physvol name="Mirror_4_Lower"> <volumeref ref="Mirror_Log"/>     <positionref ref="Mirror_4_Lower_Pos"/>     <rotationref ref="Mirror_4_Rot"/> </physvol>
+  <physvol name="Mirror_4_Lower_Coat"> <volumeref ref="Mirror_Coat_Log"/>     <positionref ref="Mirror_4_Lower_Coat_Pos"/>     <rotationref ref="Mirror_4_Rot"/> </physvol>
+
+<!--
+  <physvol name="Truss"> <volumeref ref="Truss_Log"/>     <positionref ref="Casing_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+-->
+
+<!-- Truss-->
+
+  <physvol name="Casing"> <volumeref ref="Casing_Log"/>     <positionref ref="Casing_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+  <loop for="i" from="0" to="3" step="1">
+  <physvol name="Truss_Upper">
+    <volumeref ref="trussVol[i+1]"/>
+    <position name="trussPos_Upper[i+1]"  x="750-2*i*250" y="1000" z="Casing_Pos_X" unit="mm" />
+  </physvol>
+  <physvol name="Truss_Lower">
+    <volumeref ref="trussVol[i+1]"/>
+    <position name="trussPos_Lower[i+1]"  x="750-(i*2)*250" y="-1000" z="Casing_Pos_X" unit="mm" />
+  </physvol>
+  <physvol name="Truss_Neg_Z">
+    <volumeref ref="trussVol[i+1]"/>
+    <position name="trussPos_Neg_Z[i+1]"  x="-1000" y="750-(i*2)*250" z="Casing_Pos_X" unit="mm" />
+  </physvol>
+  <physvol name="Truss_Pos_Z">
+    <volumeref ref="trussVol[i+1]"/>
+    <position name="trussPos_Pos_Z[i+1]"  x="1000" y="750-(i*2)*250" z="Casing_Pos_X" unit="mm" />
+  </physvol>
+  </loop>
+
+
+
+
+ </volume>
+ </structure>
+
+
+<!--*******************************************-->
+<!--************* 5. World Setup  *************-->
+<!--*******************************************-->
+
+ <setup name="World_PV" version="1.0"> <world ref="World"/> </setup>
+
+</gdml>

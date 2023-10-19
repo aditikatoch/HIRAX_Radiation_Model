@@ -1,0 +1,6 @@
+# geometry
+# in this case: model from external file in GDML format
+
+/gras/geometry/type gdml
+/gdml/file {geomfilename}
+

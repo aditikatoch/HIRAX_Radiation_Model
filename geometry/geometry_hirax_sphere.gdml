@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../GDMLSchema/gdml.xsd">
+
+<!-- Pre defined elements constant and quantities-->
+<define>
+  <constant name="HALFPI" value="pi/2."/>
+  <constant name="PI" value="1.*pi"/>
+  <constant name="TWOPI" value="2.*pi"/>
+
+<!-- THE WORLD -->
+  <quantity name="World_X"     type="length" value="2000000." unit="mm"/>
+  <quantity name="World_Y"     type="length" value="2000000." unit="mm"/>
+  <quantity name="World_Z"     type="length" value="2000000." unit="mm"/>
+
+<!--*******************************************-->
+<!--******* 1. Definition of Dimensions *******-->
+<!--*******************************************-->
+
+  <variable name="i" value="0"/>
+
+<!-- Origin defintion: Back of the Spacecraft Bus -->
+  <quantity name="Origin_X" type="length" value="0" unit="mm"/>
+  <quantity name="Origin_Y" type="length" value="0" unit="mm"/>
+  <quantity name="Origin_Z" type="length" value="0" unit="mm"/>
+
+<!-- SPACECRAFT BUS -->
+<!-- Hollow Cylinder/Tube: h = 2m, o_diameter = 4m, i_diameter (shielding dependent) = 3.6m -->
+  <quantity name="Bus_Z"          type="length" value="10." unit="mm"/>
+
+
+
+<!-- Detector x =50-->
+  <quantity name="Detector_X"           type="length" value="50" unit="mm"/>
+  <quantity name="Detector_Y"           type="length" value="67" unit="mm"/>
+  <quantity name="Detector_Z"           type="length" value="1800" unit="mm"/>
+
+<!-- STRUCTURE -->
+<!-- Instrument Optical: 14.69 m-->
+<!-- Bus: 2 m , 10mm thick -->
+<!-- Truss: 20 mm beams (15 mm thick) -->
+<!-- Casing: 2 mm-->
+<!-- MLI: 1 mm-->
+<!-- Thickness of the INT: 167mm (STR) -->
+<!-- Solar Panel: 20 mm -->
+<!-- OSR Coating (not required in the first order calculations) -->
+<!-- Detector Coating: 160nm Polymide + 40 nm Al with 1mm Pb on +/- Y and +/- Z (+/- X in GDML model)-->
+
+<!-- MLI 20 layers eff = 1mm -->
+  <quantity name="Case_X"           type="length" value="2500" unit="mm"/>
+  <quantity name="Case_Y"           type="length" value="2500" unit="mm"/>
+  <quantity name="Case_Z"           type="length" value="2500" unit="mm"/>
+
+<!-- MLI Subtraction => Casing -->
+  <quantity name="Case_Thickness"   type="length" value="50" unit="mm"/>
+  <!-- <quantity name="Casing_XRI_X"          same as name="MLI_X"  -->
+  <expression name="Case_Truss_Sub"> Case_Y - 2.*Case_Thickness </expression>
+  <!-- <expression name="Casing_XRI_Z"> Casing_XRI_Y same as name="Same as Truss_Y" -->
+
+<!-- Casing subtraction => Truss -->
+  <quantity name="Truss_Thickness"   type="length" value="10" unit="mm"/>
+  <expression name="Truss_Sub"> Case_Truss_Sub - 2.*Truss_Thickness </expression>
+
+<!-- 200mm/10mm/1mm-->
+<!-- Rmin values -->
+  <quantity name="Case_Sphere_Thickness"   type="length" value="1249" unit="mm"/>
+  <!-- <quantity name="Truss_Sphere_Thickness"   type="length" value="1190" unit="mm"/>
+  <quantity name="Shield_Sphere_Thickness"   type="length" value="1175" unit="mm"/> -->
+
+
+<!-- ##################################################################### POSITION VARIABLE DEFINITIONS ################################################################## -->
+
+  <quantity name="Casing_Pos_X"                 type="length"   value="3155"    unit="mm"/>
+  <!-- <quantity name="Casing_Pos_X"                 type="length"   value="2500"    unit="mm"/> -->
+
+  <quantity name="Detector_Pos_X"                 type="length"   value="2025"    unit="mm"/>
+  <expression name="Detector_Lower_Pos_Y"> Origin_Y - 150 </expression>
+  <expression name="Detector_Pos_Y"> Origin_Y + 150 </expression>
+
+   <expression name="Side_Shield_Z"> Detector_X + 0.004 </expression>
+
+<!-- #################################################################### POSITION DEFINITION IN 3D ##################################################################### -->
+
+<!-- Position dimension are flipped for X and Z -->
+
+  <position name="Casing_Pos"  				     x="Origin_Z" y="-Origin_Y" z="Casing_Pos_X" unit="mm" />
+  <position name="Casing_Sphere_Pos"  		 x="Origin_Z" y="Origin_Y" z="Detector_Pos_X" unit="mm" />
+
+<!-- Detectors-->
+<!-- D1 -->
+  <position name="Detector_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="Detector_Pos_X" unit="mm" />
+  <position name="Detector_Layer_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="2050.002" unit="mm" />
+  <position name="Detector_Shield_Pos"  	 x="Origin_Z" y="Detector_Pos_Y" z="2025.002" unit="mm" />
+
+<!-- D2 -->
+  <position name="Detector_Lower_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="Detector_Pos_X" unit="mm" />
+  <position name="Detector_Lower_Layer_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="2050.002" unit="mm" />
+  <position name="Detector_Lower_Shield_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="2025.002" unit="mm" />
+
+<!-- Graded z shield-->
+  <quantity name="Kapton_Polymide_Layer"                      type="length"   value="0.0003000"        unit="mm"/>
+  <quantity name="Kapton_Polymide_Metal_Layer"                type="length"   value="0.000080"        unit="mm"/>
+
+  <expression name="Detector_Shield_Polymide_Layer_Pos_X"> 2050.004 + (Kapton_Polymide_Layer/2) </expression>
+
+  <expression name="Detector_Shield_Polymide_Metal_Layer_Pos_X"> 2050.004 + Kapton_Polymide_Layer + (Kapton_Polymide_Metal_Layer)/2 </expression>
+
+  <position name="Detector_Shield_Polymide_Pos"  	 x="Origin_Z" y="Origin_Y" z="Detector_Shield_Polymide_Layer_Pos_X" unit="mm" />
+  <position name="Detector_Shield_Polymide_Metal_Pos"  	 x="Origin_Z" y="Origin_Y" z="Detector_Shield_Polymide_Metal_Layer_Pos_X" unit="mm" />
+
+  <position name="Detector_Lower_Shield_Polymide_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="Detector_Shield_Polymide_Layer_Pos_X" unit="mm" />
+  <position name="Detector_Lower_Shield_Polymide_Metal_Pos"  	 x="Origin_Z" y="Detector_Lower_Pos_Y" z="Detector_Shield_Polymide_Metal_Layer_Pos_X" unit="mm" />
+
+
+
+  <position name="pos_centre"    />
+  <rotation name="rot_identity"  />
+
+</define>
+
+
+
+
+
+
+
+
+<!--*******************************************************************-->
+<!--******* 2. Definition of Materials *******-->
+<!--*******************************************************************-->
+
+<materials>
+  <define>
+    <quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3"/>
+  </define>
+ <!-- ############ Elements ############# -->
+ <!-- Si -->
+  <element name="ele_Silicon"    formula="Si" Z="14."> <atom value="28.09"/>    </element>
+  <material name="Si">
+    <D value="2.33" unit = "g/cm3"/>
+    <composite n="1" ref="ele_Silicon"/>
+  </material>
+
+ <!-- Al -->
+  <element name="ele_Aluminium"  formula="Al" Z="13."> <atom value="26.98"/>    </element>
+  <material name="Al" formula="Al">
+    <D value="2.7" unit = "g/cm3"/>  <!-- Density -->
+    <composite n="1" ref="ele_Aluminium"/>
+  </material>
+
+  <!-- Pb -->
+   <element name="ele_Lead"  formula="Pb" Z="82."> <atom value="207.2"/>    </element>
+   <material name="Pb" formula="Pb">
+     <D value="11.3" unit = "g/cm3"/>  <!-- Density -->
+     <composite n="1" ref="ele_Lead"/>
+   </material>
+
+
+ <!-- Sn -->
+  <element name="ele_Tin"  formula="Sn" Z="50."> <atom value="118.710"/>    </element>
+  <material name="Sn" formula="Sn">
+    <D value="7.287" unit = "g/cm3"/>  <!-- Density -->
+    <composite n="1" ref="ele_Tin"/>
+  </material>
+
+
+  <!-- Ir -->
+  <element name="ele_Iridium"   formula="Ir"  Z="77.">  <atom value="192.22"/>     </element>
+  <material name="Ir" formula="Ir">
+    <D value="22.56" unit = "g/cm3"/>  <!-- Density -->
+    <composite n="1" ref="ele_Iridium"/>
+  </material>
+
+ <!-- O -->
+  <element name="ele_Oxygen"     formula="O"  Z="8.">  <atom value="16.0"/>     </element>
+ <!-- Ti -->
+  <element name="ele_Titanium"   formula="Ti" Z="22."> <atom value="47.867"/>   </element>
+<!-- Br -->
+  <element name="ele_Bromine"     formula="Br"  Z="35.">  <atom value="79.904"/>    </element>
+<!-- C -->
+  <element name="ele_Carbon"     formula="C"  Z="6.">  <atom value="12.01"/>    </element>
+<!-- H -->
+  <element name="ele_Hydrogen"   formula="H"  Z="1.">  <atom value="1.01"/>     </element>
+<!-- N -->
+  <element name="ele_Nitrogen"   formula="N"  Z="7.">  <atom value="14."/>     </element>
+<!-- Pb -->
+  <element name="ele_Lead"     formula="Pb"  Z="82.">  <atom value="207.2"/>    </element>
+<!-- Pb -->
+  <element name="ele_Tin"     formula="Sn"  Z="50.">  <atom value="118.710"/>    </element>
+
+<!-- ####### Compounds ############ -->
+<!-- SiO2 -->
+  <material name="Silicon_Dioxide" formula="SiO2">
+    <D value="2.32" unit = "g/cm3"/>
+    <composite n="1" ref="ele_Silicon"/>
+    <composite n="2" ref="ele_Oxygen"/>
+  </material>
+
+
+<!-- Polymide: https://www.researchgate.net/publication/362012723_Filters_for_X-ray_detectors_on_Space_missions Page 15 -->
+<material name="Polymide" formula="Polymide">
+  <D value="1.42" unit = "g/cm3"/>
+  <composite n="22" ref="ele_Carbon"/>
+  <composite n="5" ref="ele_Oxygen"/>
+  <composite n="10" ref="ele_Hydrogen"/>
+  <composite n="2" ref="ele_Nitrogen"/>
+</material>
+
+
+<!-- SiC -->
+  <material name="Silicon_Carbide" formula="SiC">
+    <D value="3.21" unit = "g/cm3"/>
+    <composite n="1" ref="ele_Silicon"/>
+    <composite n="1" ref="ele_Carbon"/>
+   </material>
+
+<!-- Vacuum is already defined in GRAS-->
+  <material name="Vacuum" Z="1.">
+   <T value="2.73"/> <P value="3.0e-18" unit="pascal"/> <Dref ref="universe_mean_density"/>
+   <atom value="1.01"/>
+  </material>
+
+ </materials>
+
+
+<!--***********************************************************************-->
+<!--******* 3. Definition of Solids *******-->
+<!--*******************************************************************-->
+
+<solids>
+  <box name="World_Sol" x="World_X" y="World_Y" z="World_Z" lunit="mm"/>
+
+ <!-- Spacecraft Bus -->
+  <!-- <tube name="Bus_Sol" rmin="0" rmax="2000" z="10" deltaphi="90" startphi="0" aunit="rad" lunit="mm"  /> -->
+
+  <!-- Struct -->
+	<!-- <box name="Case_Box_Sol"  x="Case_Z" y="Case_Y" z="Case_X" lunit="mm" />
+	<box name="Case_Truss_Sub_Sol"  x="Case_Truss_Sub" y="Case_Truss_Sub" z="Case_X" lunit="mm" />
+  	<subtraction name="Case_Sol">
+    	<first ref="Case_Box_Sol"/> <second ref="Case_Truss_Sub_Sol"/>
+      <positionref ref = "pos_centre"/>
+  	</subtraction>
+    <box name="Case_Truss_Sub_Sol_Fit"  x="Case_Truss_Sub" y="Case_Truss_Sub" z="Case_Truss_Sub" lunit="mm" />
+    <box name="Truss_Box_Sol"  x="Truss_Sub" y="Truss_Sub" z="Truss_Sub" lunit="mm" />
+    <subtraction name="Truss_Sol">
+    	<first ref="Case_Truss_Sub_Sol_Fit"/> <second ref="Truss_Box_Sol"/>
+      <positionref ref = "pos_centre"/>
+  	</subtraction> -->
+
+
+    <sphere name= "Case_Sphere_Sol" rmin="Case_Sphere_Thickness" rmax="1250" deltaphi="90" deltatheta="90" aunit="rad" lunit= "mm"/>
+    <!-- <sphere name= "Truss_Sphere_Sol" rmin="Truss_Sphere_Thickness" rmax="Case_Sphere_Thickness" deltaphi="90" deltatheta="90" aunit="rad" lunit= "mm"/>
+    <sphere name= "Shield_Sphere_Sol" rmin="Shield_Sphere_Thickness" rmax="Truss_Sphere_Thickness" deltaphi="90" deltatheta="90" aunit="rad" lunit= "mm"/> -->
+
+
+<!-- Detector -->
+ <box name="Detector_Sol"  x="Detector_Z" y="Detector_Y" z="Detector_X" lunit="mm"/>
+ <box name="Detector_Layer_Sol"  x="Detector_Z" y="Detector_Y" z="0.004" lunit="mm"/>
+
+
+<!-- Shield D_1 (Upper)-->
+<box name="Shield_Polymide_Sol"  x="Detector_Z" y="Detector_Y" z="Kapton_Polymide_Layer" lunit="mm"/>
+<box name="Shield_Polymide_Metal_Sol"  x="Detector_Z" y="Detector_Y" z="Kapton_Polymide_Metal_Layer" lunit="mm"/>
+
+
+ <!-- Shield - 1mm -->
+  <!-- Shield Detector_Lower - 1mm -->
+ <box name="Shield_Sol"  x="1804" y="71" z="Side_Shield_Z" lunit="mm"/>
+  <box name="Shield_Sub_Sol"  x="Detector_Z" y="Detector_Y" z="Side_Shield_Z" lunit="mm"/>
+ <subtraction name="Detector_Shield_Sol">
+     <first ref="Shield_Sol"/> <second ref="Shield_Sub_Sol"/>
+ </subtraction>
+ <!--
+ DIMENSION REFERENCE
+ <quantity name="Detector_X"           type="length" value="50" unit="mm"/>
+ <quantity name="Detector_Y"           type="length" value="67" unit="mm"/>
+ <quantity name="Detector_Z"           type="length" value="1800" unit="mm"/>
+-->
+
+
+</solids>
+
+
+
+<!--*******************************************************************-->
+<!--******* 4. Definition of Structure  *******-->
+<!--*******************************************************************-->
+
+<structure>
+
+<!-- ############################################ LOGICAL VOLUME ########################################## -->
+
+<!-- Spacecraft Bus -->
+
+  <!-- <volume name = "Bus_Log">
+  	<materialref ref = "Al"/> <solidref ref = "Bus_Sol"/>
+  </volume> -->
+
+<!-- Cube-->
+  <!-- <volume name = "Case_Log">
+  	<materialref ref = "Al"/> <solidref ref = "Case_Sol"/>
+  </volume>
+
+  <volume name = "Truss_Log">
+    <materialref ref = "Silicon_Carbide"/> <solidref ref = "Truss_Sol"/>
+  </volume> -->
+<!-- Sphere -->
+  <volume name = "Case_Sphere_Log">
+    <materialref ref = "Al"/> <solidref ref = "Case_Sphere_Sol"/>
+  </volume>
+<!--
+  <volume name = "Truss_Sphere_Log">
+    <materialref ref = "Silicon_Carbide"/> <solidref ref = "Truss_Sphere_Sol"/>
+  </volume>
+
+  <volume name = "Shield_Sphere_Log">
+    <materialref ref = "Al"/> <solidref ref = "Shield_Sphere_Sol"/>
+  </volume> -->
+
+<!-- Detector -->
+  <volume name = "Detector_Log">
+    <materialref ref = "Si"/> <solidref ref = "Detector_Sol"/>
+  </volume>
+
+  <!-- Detector Si Layer-->
+  <volume name = "Detector_Layer_Log">
+    <materialref ref = "Si"/> <solidref ref = "Detector_Layer_Sol"/>
+  </volume>
+
+<!-- Detector 1mm shield-->
+  <volume name = "Detector_Shield_Log">
+    <materialref ref = "Al"/> <solidref ref = "Detector_Shield_Sol"/>
+  </volume>
+
+  <volume name = "Detector_Shield_Polymide_Log">
+    <materialref ref = "Polymide"/> <solidref ref = "Shield_Polymide_Sol"/>
+  </volume>
+
+  <volume name = "Detector_Shield_Polymide_Metal_Log">
+    <materialref ref = "Al"/> <solidref ref = "Shield_Polymide_Metal_Sol"/>
+  </volume>
+
+<!-- ########### PHYSICAL WORLD VOLUME ######### -->
+<volume name="World">
+  <materialref ref="Vacuum"/> <solidref ref="World_Sol"/>
+
+<!-- ####################################################### PHYSICAL VOLUME ##################################################### -->
+
+
+
+<!--Struct-->
+  <!-- <physvol name="Case"> <volumeref ref="Case_Log"/>     <positionref ref="Casing_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+ <physvol name="Truss"> <volumeref ref="Truss_Log"/>     <positionref ref="Casing_Pos"/>     <rotationref ref="rot_identity"/> </physvol> -->
+
+ <physvol name="Case_Sphere"> <volumeref ref="Case_Sphere_Log"/>     <positionref ref="Casing_Sphere_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+<!-- <physvol name="Truss_Sphere"> <volumeref ref="Truss_Sphere_Log"/>     <positionref ref="Casing_Sphere_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+<physvol name="Shield_Sphere"> <volumeref ref="Shield_Sphere_Log"/>     <positionref ref="Casing_Sphere_Pos"/>     <rotationref ref="rot_identity"/> </physvol> -->
+
+
+<!-- Detector-->
+  <physvol name="Detector"> <volumeref ref="Detector_Log"/>     <positionref ref="Detector_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Layer"> <volumeref ref="Detector_Layer_Log"/>     <positionref ref="Detector_Layer_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower"> <volumeref ref="Detector_Log"/>     <positionref ref="Detector_Lower_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower_Layer"> <volumeref ref="Detector_Layer_Log"/>     <positionref ref="Detector_Lower_Layer_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+  <!-- Shielding-->
+<!--
+   <physvol name="Detector_Shield"> <volumeref ref="Detector_Shield_Log"/>     <positionref ref="Detector_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+  <physvol name="Detector_Shield_Polymide"> <volumeref ref="Detector_Shield_Polymide_Log"/>     <positionref ref="Detector_Shield_Polymide_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Shield_Polymide_Metal"> <volumeref ref="Detector_Shield_Polymide_Metal_Log"/>     <positionref ref="Detector_Shield_Polymide_Metal_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+  <physvol name="Detector_Lower_Shield"> <volumeref ref="Detector_Shield_Log"/>     <positionref ref="Detector_Lower_Shield_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+
+  <physvol name="Detector_Lower_Shield_Polymide"> <volumeref ref="Detector_Shield_Polymide_Log"/>     <positionref ref="Detector_Lower_Shield_Polymide_Pos"/>     <rotationref ref="rot_identity"/> </physvol>
+
+  <physvol name="Detector_Lower_Shield_Polymide_Metal"> <volumeref ref="Detector_Shield_Polymide_Metal_Log"/>     <positionref ref="Detector_Lower_Shield_Polymide_Metal_Pos"/>     <rotationref ref="rot_identity"/> </physvol> -->
+
+
+
+
+
+ </volume>
+ </structure>
+
+
+<!--*******************************************-->
+<!--************* 5. World Setup  *************-->
+<!--*******************************************-->
+
+ <setup name="World_PV" version="1.0"> <world ref="World"/> </setup>
+
+</gdml>
