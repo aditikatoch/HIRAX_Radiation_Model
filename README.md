@@ -27,6 +27,11 @@ The GRAS/Geant4 offers a wide range of analysis modules normalised by the number
 
 # Code Assist
 
+### The source definition:
+The sources are definite in the files present in the _source_ folder and are generated from SPENVIS for galactic cosmic rays and solar protons using the CREME-96 and the ESP model. The files supported by forward Monte Carlo (FMC) and reverse Monte Carlo (RMC) are present.
+
+The final source particle histograms can also be obtained in the output file by specifying it in the _macros_ file being run.
+
 ### The geometry GDML files:
 These files can be run on the GRAS graphic window after specifying which file to run in _macros/viewer.g4mac_ and entering the following command:
 ```
@@ -36,11 +41,13 @@ The geometry files consist of basic spacecraft models in sphere and box configur
 
 ![image](https://github.com/aditikatoch/HIRAX_Radiation_Model/assets/56295364/47542a36-f1eb-4b63-a092-f14bf5d7cc96)
 
+### Physics interactions:
+For the interactions of source particles and the spacecraft material, Geant4 physics interactions added were the reverse Monte Carlo (RMC) physics given the complexity of the spacecraft. The files in the _physics_ folder contain the FMC options and the RMC physics file. More information about these can be found on Geant4 and GRAS websites. 
 
 ### The analysis files:
 These are the main program files in the _macros_ folder that consist of all the definitions, aliases and final outputs that are desired. These files can be run directly in the command window specifying which file to run. The files are named according to which volume is considered as the target volume. Except for _modular_macro.g4mac_ all the other files are coded to run reverse Monte Carlo simulations. _modular_macro_rmc_d.g4mac_ has detector as target and _modular_macro_rm_m1.g4mac_ and the consequent numbers _m2, m3, m4_ are for the mirror configuration 1, 2, 3 and 4 where _m2_ is the slatted mirror configuration.
 
-The code to execute these files, example for the detector file, is:
+The code to execute these files, for example for the detector file, is:
 ```
 gras macros/modular_macro_rmc_d.g4mac
 ```
