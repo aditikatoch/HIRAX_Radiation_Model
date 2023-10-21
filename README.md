@@ -35,3 +35,14 @@ These files can be run on the GRAS graphic window after specifying which file to
 The geometry files consist of basic spacecraft models in sphere and box configurations and the full spacecraft model of the HIRAX spacecraft given below.
 
 ![image](https://github.com/aditikatoch/HIRAX_Radiation_Model/assets/56295364/47542a36-f1eb-4b63-a092-f14bf5d7cc96)
+
+
+### The analysis files:
+These are the main program files in the _macros_ folder that consist of all the definitions, aliases and final outputs that are desired. These files can be run directly in the command window specifying which file to run. The files are named according to which volume is considered as the target volume. Except for _modular_macro.g4mac_ all the other files are coded to run reverse Monte Carlo simulations. _modular_macro_rmc_d.g4mac_ has detector as target and _modular_macro_rm_m1.g4mac_ and the consequent numbers _m2, m3, m4_ are for the mirror configuration 1, 2, 3 and 4 where _m2_ is the slatted mirror configuration.
+
+The code to execute these files, example for the detector file, is:
+```
+gras macros/modular_macro_rmc_d.g4mac
+```
+
+
