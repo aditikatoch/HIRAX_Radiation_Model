@@ -27,3 +27,10 @@ The GRAS/Geant4 offers a wide range of analysis modules normalised by the number
 
 # Code Assist
 
+### The geometry GDML files:
+These files can be run on the GRAS graphic window after specifying which file to run in _macros/viewer.g4mac_ and entering the following command:
+```
+/control/execute macros/viewer.g4mac
+```
+The geometry files consist of basic spacecraft models in sphere and box configurations and the full spacecraft model of the HIRAX spacecraft given below.
+![image](https://github.com/aditikatoch/HIRAX_Radiation_Model/assets/56295364/47542a36-f1eb-4b63-a092-f14bf5d7cc96)
